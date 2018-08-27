@@ -5,8 +5,7 @@ pipeline {
       steps {
         echo 'Building...'
         sh '''./mvnw clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
-cd docker
-docker-compose up'''
+docker-compose version'''
       }
     }
     stage('Test') {

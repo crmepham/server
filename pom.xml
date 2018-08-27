@@ -46,8 +46,8 @@
         <!-- SWAGGER -->
         <swagger.version>2.7.0</swagger.version>
 
-        <!-- POSTGRES -->
-        <postgresql.version>42.2.2</postgresql.version>
+        <!-- MYSQL -->
+        <mysql.version>8.0.12</mysql.version>
 
     </properties>
 

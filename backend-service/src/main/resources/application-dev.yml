@@ -15,9 +15,13 @@ logging:
     org.slf4j: 'DEBUG'
 
 spring:
-  datasource:
-    url: jdbc:postgresql://postgresql:55432/server
-    username: server
-    password: server
-  jpa:
-    properties.hibernate.defaultSchema: public
+    jpa:
+        database: MYSQL
+        hibernate:
+            ddl-auto: validate
+
+    datasource:
+        url: jdbc:mysql://localhost:3306/server2
+        username: server2
+        password: server2
+        driver-class-name: com.mysql.cj.jdbc.Driver

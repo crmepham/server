@@ -6,9 +6,8 @@ pipeline {
         echo 'Building...'
         sh '''pwd
 ls -la
-export PATH=$PATH:$M2_HOME
-mvn --version
-mvn -version
+./mvnw clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
+mv ./frontend-service/target/frontend-service-1.0.jar ./frontend-service-${BUILD_NUMBER}-${GIT_COMMIT}.jar
 ls -la'''
       }
     }

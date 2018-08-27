@@ -41,7 +41,7 @@ docker push crmepham/server-crawler-service'''
     stage('Start applications') {
       steps {
         sh '''cd docker
-docker-compose up'''
+sudo docker-compose up'''
       }
     }
   }

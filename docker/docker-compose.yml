@@ -11,15 +11,15 @@ services:
       volumes:
        - pgdata:/var/lib/postgresql/data
   backend:
-    image: server/backend-service
+    image: crmepham/server-backend-service
     ports:
       - "9030:9030"
   crawler:
-    image: server/crawler-service
+    image: crmepham/server-crawler-service
     ports:
       - "9010:9010"
   frontend:
-    image: server/frontend-service
+    image: crmepham/server-frontend-service
     ports:
       - "3333:3333"
 volumes:

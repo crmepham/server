@@ -4,12 +4,9 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
-        sh '''pwd
-ls -la
-
-./mvnw.sh clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
-mv ./crawler-service/target/crawler-service-1.0.jar ./crawler-service-${BUILD_NUMBER}-${GIT_COMMIT}.jar
-ls -la'''
+        sh '''./mvnw clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
+cd docker
+docker-compose up'''
       }
     }
     stage('Test') {

@@ -6,8 +6,7 @@ pipeline {
         echo 'Building...'
         sh '''pwd
 ls -la
-export M2_HOME=/usr/share/maven
-export PATH=$PATH:$M2_HOME/bin
+export PATH=$PATH:$M2_HOME
 mvn --version
 mvn -version
 ls -la'''

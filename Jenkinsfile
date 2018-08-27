@@ -13,12 +13,15 @@ pipeline {
         sh '''ps | grep backend-service | awk \'{print $1}\' | xargs kill -9 || true
 ps | grep frontend-service | awk \'{print $1}\' | xargs kill -9 || true
 ps | grep crawler-service | awk \'{print $1}\' | xargs kill -9 || true
+rm backend-service.jar
+rm frontend-service.jar
+rm crawler-service.jar
 mv backend-service/target/backend-service-1.0-SNAPSHOT.jar backend-service.jar
 mv frontend-service/target/frontend-service-1.0-SNAPSHOT.jar frontend-service.jar
 mv crawler-service/target/crawler-service-1.0-SNAPSHOT.jar crawler-service.jar
-nohup java -jar backend-service-1.0-SNAPSHOT.jar &
-nohup java -jar frontend-service-1.0-SNAPSHOT.jar &
-nohup java -jar crawler-service-1.0-SNAPSHOT.jar &'''
+nohup java -jar backend-service.jar &
+nohup java -jar frontend-service.jar &
+nohup java -jar crawler-service.jar &'''
       }
     }
   }

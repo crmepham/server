@@ -7,7 +7,7 @@ pipeline {
         sh '''pwd
 ls -la
 
-./mvnw.sh clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
+mvn clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
 mv ./crawler-service/target/crawler-service-1.0.jar ./crawler-service-${BUILD_NUMBER}-${GIT_COMMIT}.jar
 ls -la'''
       }

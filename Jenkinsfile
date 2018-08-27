@@ -40,8 +40,8 @@ docker push crmepham/server-crawler-service'''
     }
     stage('Start applications') {
       steps {
-        sh '''cd docker
-docker-compose up'''
+        sh '''cd backend-service/target
+java -jar backend-service-1.0-SNAPSHOT.jar'''
       }
     }
   }

@@ -8,39 +8,9 @@ pipeline {
 '''
       }
     }
-    stage('Push to Docker Cloud') {
-      parallel {
-        stage('Push to Docker Cloud') {
-          steps {
-            echo 'Pushing images to Docker Cloud'
-          }
-        }
-        stage('Pushing frontend') {
-          steps {
-            sh '''docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-docker tag server/frontend-service crmepham/server-frontend-service
-docker push crmepham/server-frontend-service'''
-          }
-        }
-        stage('Pushing backend') {
-          steps {
-            sh '''docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-docker tag server/backend-service crmepham/server-backend-service
-docker push crmepham/server-backend-service'''
-          }
-        }
-        stage('Pushing crawler') {
-          steps {
-            sh '''docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-docker tag server/crawler-service crmepham/server-crawler-service
-docker push crmepham/server-crawler-service'''
-          }
-        }
-      }
-    }
     stage('Start applications') {
       steps {
-        sh '''cd backend-service/target
+        sh '''cd /backend-service/target
 ps | grep backend-service | awk \'{print $1}\' | xargs kill -9 || true
 nohup java -jar backend-service-1.0-SNAPSHOT.jar &'''
       }

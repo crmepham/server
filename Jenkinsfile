@@ -7,7 +7,7 @@ pipeline {
         sh '''./mvnw clean verify package -Pdocker -am -Dconfig.build="${BUILD_NUMBER}"
 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 docker tag server/frontend-service crmepham/server-frontend-service
-docker push'''
+docker push crmepham/server-frontend-service'''
       }
     }
     stage('Test') {

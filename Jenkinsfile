@@ -19,9 +19,9 @@ rm crawler-service.jar | true
 mv backend-service/target/backend-service-1.0-SNAPSHOT.jar backend-service.jar
 mv frontend-service/target/frontend-service-1.0-SNAPSHOT.jar frontend-service.jar
 mv crawler-service/target/crawler-service-1.0-SNAPSHOT.jar crawler-service.jar
-nohup java -jar backend-service.jar &
-nohup java -jar frontend-service.jar &
-nohup java -jar crawler-service.jar &'''
+nohup java -jar -Dspring.profiles.active=docker backend-service.jar &
+nohup java -jar -Dspring.profiles.active=docker frontend-service.jar &
+nohup java -jar -Dspring.profiles.active=docker crawler-service.jar &'''
       }
     }
   }

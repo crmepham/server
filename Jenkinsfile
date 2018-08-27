@@ -41,7 +41,8 @@ docker push crmepham/server-crawler-service'''
     stage('Start applications') {
       steps {
         sh '''cd backend-service/target
-java -jar backend-service-1.0-SNAPSHOT.jar'''
+ps | grep backend-service | awk \'{print $1}\' | xargs kill -9 || true
+nohup java -jar backend-service-1.0-SNAPSHOT.jar &'''
       }
     }
   }

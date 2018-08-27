@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
-        sh '''./mvnw clean verify package -am -Dconfig.build="${BUILD_NUMBER}"
+        sh '''./mvnw clean verify package -Pdocker -am -Dconfig.build="${BUILD_NUMBER}"
 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 docker tag server/frontend-service crmepham/server-frontend-service
 docker push'''

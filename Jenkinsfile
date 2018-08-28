@@ -13,7 +13,7 @@ rm frontend-service.jar | true
 mv frontend-service/target/frontend-service-1.0-SNAPSHOT.jar frontend-service.jar
 chmod +x frontend-service.jar
 
-nohup java -jar frontend-service.jar &'''
+nohup java -jar frontend-service.jar'''
       }
     }
   }

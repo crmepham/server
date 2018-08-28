@@ -1,5 +1,11 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'crmepham/server-frontend-service'
+      args '-p 3334:3334'
+    }
+
+  }
   stages {
     stage('Build') {
       steps {

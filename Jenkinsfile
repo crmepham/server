@@ -13,6 +13,7 @@ pipeline {
         sh '''ps | grep frontend-service | awk \'{print $1}\' | xargs kill -9 || true
 rm frontend-service.jar | true
 mv frontend-service/target/frontend-service-1.0-SNAPSHOT.jar frontend-service.jar
+chmod +x frontend-service.jar
 nohup java -jar -Dspring.profiles.active=docker frontend-service.jar &'''
       }
     }

@@ -1,8 +1,8 @@
 pipeline {
   agent {
     docker {
-      image 'crmepham/server-frontend-service'
       args '-p 3334:3334'
+      image 'crmepham/server-frontend-service:latest'
     }
 
   }

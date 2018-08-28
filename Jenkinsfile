@@ -16,4 +16,7 @@ docker run -p 3334:3334 crmepham/server-frontend-service:latest > nohup.out || t
       }
     }
   }
+  environment {
+    BUILD_ID = 'dontKillMe'
+  }
 }

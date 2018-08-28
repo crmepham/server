@@ -4,7 +4,8 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building...'
-        sh '''java -jar frontend-service.jar
+        sh '''ls -la
+java -jar frontend-service.jar
 '''
       }
     }

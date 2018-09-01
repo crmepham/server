@@ -1,0 +1,54 @@
+.card {
+    border: 1px solid #bebebe;
+    border-radius: 2px;
+}
+.card-header {
+    background: #edf4fb;
+    color: #565656;
+}
+.btn {
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 0.8em;
+    transition: background-color 200ms ease-out;
+    margin-left: 10px;
+}
+.btn-primary {
+    background: #557eb4;
+}
+.btn-secondary {
+    background: #b8e3ff;
+    border: 1px solid #698bba;
+    color: #2f2f2f;
+}
+.btn-danger {
+    background: #ffc1a9;
+    border: 1px solid #f55d49;
+    color: #2f2f2f;
+}
+.btn-warning {
+     background: #e7e364;
+     border: 1px solid #747312;
+     color: #2f2f2f;
+ }
+.btn-warning:hover {
+    background: #d6d420;
+    color: #ffffff;
+}
+.btn-danger:hover {
+    border: 1px solid #f55d49;
+    background: #ff8f7b;
+}
+.btn-secondary:hover {
+    border: 1px solid #698bba;
+    background: #8caed6;
+}
+input[type='text'], input[type='password'], input[type='search'] {
+    border-radius: 2px;
+}
+.bg-primary {
+    background: #005ec4 !important;
+}
+.dropdown-menu {
+    border-radius: 2px;
+}

@@ -9,3 +9,15 @@ logging:
   file: server.log
   level:
     org.slf4j: 'INFO'
+
+spring:
+    jpa:
+        database: MYSQL
+        hibernate:
+            ddl-auto: validate
+
+    datasource:
+        url: jdbc:mysql://localhost:3306/server2
+        username: server2
+        password: server2
+        driver-class-name: com.mysql.cj.jdbc.Driver

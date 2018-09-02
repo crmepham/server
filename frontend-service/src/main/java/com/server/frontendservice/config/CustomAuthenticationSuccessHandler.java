@@ -28,7 +28,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         HttpSession session = request.getSession();
         List<Menu> allTopLevel = menuService.getAllTopLevel();
         session.setAttribute("topLevelMenus", allTopLevel);
-
         response.sendRedirect("/home");
     }
 }

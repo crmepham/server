@@ -39,7 +39,6 @@ create table property (
 ) engine=InnoDB default charset=utf8;
 
 CREATE INDEX property_external_reference ON `property` (external_reference);
-CREATE INDEX property_description ON `property` (description);
 
 drop table if exists menu;
 create table menu (
@@ -61,7 +60,6 @@ create table menu (
 ) engine=InnoDB default charset=utf8;
 
 CREATE INDEX menu_external_reference ON `menu` (external_reference);
-CREATE INDEX menu_title ON `menu` (title);
 
 drop table if exists dashboard;
 create table dashboard (

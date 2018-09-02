@@ -21,11 +21,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers(new String[] {"*/shared/**", "*/configuration/**"}).permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().defaultSuccessUrl("/home", true)
-                .loginPage("/login").permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login").defaultSuccessUrl("/home", true).permitAll()
                 .and().logout()
                 .logoutUrl("/logout").permitAll();
     }

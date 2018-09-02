@@ -9,8 +9,8 @@ frontend:
   url-allowed: '*'
 
 logging:
-  path: /var/log
-  file: server.log
+  path: /home/crm/jenkins/workspace/server-frontend
+  file: backend.log
   level:
     org.slf4j: 'DEBUG'
 

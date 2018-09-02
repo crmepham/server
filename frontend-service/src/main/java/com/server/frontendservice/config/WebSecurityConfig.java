@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers(new String[] {"*/shared/**", "*/configuration/**"}).permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().defaultSuccessUrl("/home")
+                .and().formLogin().defaultSuccessUrl("/home", true)
                 .loginPage("/login").permitAll()
                 .and().logout()
                 .logoutUrl("/logout").permitAll();

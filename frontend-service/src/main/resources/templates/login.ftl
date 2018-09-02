@@ -7,7 +7,7 @@
                         Login
                     </div>
                     <div class="card-body">
-                        <#if SPRING_SECURITY_LAST_EXCEPTION??>
+                        <#if SPRING_SECURITY_LAST_EXCEPTION??>ddddd
 						<div class="alert alert-danger btn-override">${SPRING_SECURITY_LAST_EXCEPTION['message']!'nope'}</div>
                         </#if>
                         <form id="login" action="/login" method="post">

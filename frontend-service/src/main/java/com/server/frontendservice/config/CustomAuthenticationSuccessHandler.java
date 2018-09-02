@@ -31,6 +31,5 @@ public class CustomAuthenticationSuccessHandler extends
         List<Menu> allTopLevel = menuService.getAllTopLevel();
         session.setAttribute("topLevelMenus", allTopLevel);
         setUseReferer(true);
-        response.sendRedirect("/home");
     }
 }

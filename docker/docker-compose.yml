@@ -1,15 +1,5 @@
 version: "2"
 services:
-  postgresql:
-      image: postgres
-      ports:
-       - "55432:5432"
-      environment:
-        POSTGRES_USER: server
-        POSTGRES_PASSWORD: server
-        POSTGRES_DB: server
-      volumes:
-       - pgdata:/var/lib/postgresql/data
   backend:
     image: crmepham/server-backend-service
     ports:
@@ -22,5 +12,3 @@ services:
     image: crmepham/server-frontend-service
     ports:
       - "3334:3334"
-volumes:
-  pgdata:

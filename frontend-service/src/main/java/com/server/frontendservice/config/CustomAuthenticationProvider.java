@@ -16,10 +16,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
     @Autowired
     private LoginService loginService;
 
+    @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
+    @Override
     public Authentication authenticate(Authentication auth) throws AuthenticationException
     {
 

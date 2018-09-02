@@ -8,7 +8,7 @@ logging:
   path: /var/log
   file: server.log
   level:
-    org.slf4j: 'INFO'
+    org.slf4j: 'DEBUG'
 
 spring:
     jpa:

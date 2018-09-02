@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -27,9 +28,9 @@ public class CustomAuthenticationSuccessHandler extends
                                         Authentication authentication) throws IOException {
 
         // Load all menus into session
-        HttpSession session = request.getSession();
-        List<Menu> allTopLevel = menuService.getAllTopLevel();
-        session.setAttribute("topLevelMenus", allTopLevel);
+        /*HttpSession session = request.getSession();
+        List<Menu> allTopLevel = menuService.getAllTopLevel();*/
+        //session.setAttribute("topLevelMenus", Collections.emptyList());
         setUseReferer(true);
     }
 }

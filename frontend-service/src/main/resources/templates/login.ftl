@@ -10,7 +10,7 @@
                         <#if SPRING_SECURITY_LAST_EXCEPTION??>ddddd
 						<div class="alert alert-danger btn-override">${SPRING_SECURITY_LAST_EXCEPTION['message']!'nope'}</div>
                         </#if>
-                        <form id="login" action="/home" method="post">
+                        <form id="login" action="/login" method="post">
                             <div class="form-group">
                                 <div>
                                     <input type="text" class="form-control" name="username" value="" placeholder="username">

@@ -26,7 +26,7 @@ create table property (
 	id bigint(10) unsigned not null auto_increment,
 	external_reference varchar(50) not null,
 	value varchar(2048),
-	description varchar(500),
+	description varchar(250),
 	created datetime not null,
 	created_user varchar(50) not null,
 	last_updated datetime,

@@ -38,8 +38,6 @@ create table property (
 	unique(external_reference)
 ) engine=InnoDB default charset=utf8;
 
-CREATE INDEX property_external_reference ON `property` (external_reference);
-
 drop table if exists menu;
 create table menu (
 	id bigint(10) unsigned not null auto_increment,
@@ -59,8 +57,6 @@ create table menu (
 	unique(uri)
 ) engine=InnoDB default charset=utf8;
 
-CREATE INDEX menu_external_reference ON `menu` (external_reference);
-
 drop table if exists dashboard;
 create table dashboard (
 	id bigint(10) unsigned not null auto_increment,
@@ -79,9 +75,6 @@ create table dashboard (
 	primary key (id),
 	unique(uri, enabled)
 ) engine=InnoDB default charset=utf8;
-
-CREATE INDEX dashboard_external_reference ON `dashboard` (external_reference);
-CREATE INDEX dashboard_uri ON `dashboard` (uri);
 
 insert into user (username, password, enabled, created, created_user)
 values ('crm', 'AAER8]HR6UnR4knR4YnRnN[]', true, now(), 'system');

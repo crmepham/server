@@ -25,9 +25,19 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException {
 
         // Load all menus into session
+
+        System.out.println("here 1");
         HttpSession session = request.getSession();
+
+        System.out.println("here 2");
+
         List<Menu> allTopLevel = menuService.getAllTopLevel();
+
+        System.out.println("here 3");
+
         session.setAttribute("topLevelMenus", allTopLevel);
+
+        System.out.println("here 4");
 
         response.sendRedirect("/home");
     }

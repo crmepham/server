@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .successHandler(customAuthenticationSuccessHandler)
-                .loginPage("/check").permitAll()
+                .loginPage("/login").permitAll()
                 .failureUrl("/login?error")
                 .and().logout()
                 .logoutUrl("/logout").permitAll();

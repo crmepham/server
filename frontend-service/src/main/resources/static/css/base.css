@@ -28,3 +28,6 @@ textarea {
     width: 100%;
     min-height: 300px;
 }
+.margin-bottom {
+    margin-bottom: 60px;
+}

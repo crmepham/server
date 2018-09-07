@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static org.springframework.http.HttpMethod.GET;
 
@@ -26,7 +27,7 @@ public class MenuRepository
     @Value("${base.api.uri}")
     private String baseUri;
 
-    public List<Menu> getAllTopLevel() {
+    public CompletableFuture<List<Menu>> getAllTopLevel() {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString("john123:password".getBytes()));
@@ -34,6 +35,6 @@ public class MenuRepository
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
         ResponseEntity<List<Menu>> res = template.exchange(baseUri + GET_ALL_TOP_LEVEL, GET, entity, new ParameterizedTypeReference<List<Menu>>() {});
-        return res.getBody();
+        return CompletableFuture.completedFuture(res.getBody());
     }
 }

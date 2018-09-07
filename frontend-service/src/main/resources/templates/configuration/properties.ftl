@@ -1,6 +1,6 @@
 <#include '../shared/header.ftl' />
 
-<@pageHeader title='Dashboards' uri='/configuration/dashboards'/>
+<@pageHeader title="Dashboards"/>
 
 <div class="container h-100">
     <div class="row h-100">

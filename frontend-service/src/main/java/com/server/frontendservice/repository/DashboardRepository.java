@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
 
 @Repository
 public class DashboardRepository extends BaseRepository
@@ -27,10 +27,10 @@ public class DashboardRepository extends BaseRepository
     @Value("${base.api.uri}")
     private String baseUri;
 
-    public List<Dashboard> getAll() {
+    public CompletableFuture<List<Dashboard>> getAll() {
 
         ResponseEntity<List<Dashboard>> res = template.exchange(baseUri + GET_ALL, GET, getEntity(), new ParameterizedTypeReference<List<Dashboard>>() {});
-        return res.getBody();
+        return CompletableFuture.completedFuture(res.getBody());
     }
 
     public Dashboard get(Long id) {

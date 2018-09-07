@@ -1,0 +1,172 @@
+package com.server.frontendservice.service;
+
+import com.server.common.exception.InvalidInputException;
+import com.server.common.exception.InvalidStateException;
+import com.server.common.model.Fragment;
+import com.server.frontendservice.repository.FragmentRepository;
+import com.sun.xml.internal.ws.util.CompletedFuture;
+import freemarker.cache.StringTemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+import static java.lang.String.format;
+import static org.springframework.util.StringUtils.hasText;
+
+@Service
+public class FragmentService extends BaseService
+{
+    @Autowired
+    private FragmentRepository fragmentRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public Map<String, Fragment> getAll(final String uri) throws Exception
+    {
+        CompletableFuture<List<Fragment>> fragments = fragmentRepository.getAll(uri);
+
+        CompletableFuture.allOf(fragments).join();
+
+        if (fragments.get().isEmpty()) {
+
+            return Collections.emptyMap();
+        }
+
+        Map<String, Fragment> fragmentMap = new HashMap<>();
+
+        for (Fragment fragment : fragments.get()) {
+
+            fragmentMap.put(fragment.getExternalReference(), fragment);
+        }
+
+        executeFragmentQueries(fragments.get());
+
+        validateTemplates(fragments.get());
+
+        return fragmentMap;
+
+    }
+
+    private void executeFragmentQueries(Collection<Fragment> fragments) {
+
+        for (Fragment fragment : fragments) {
+
+            try {
+
+                executeFragmentQuery(fragment);
+
+            } catch (Exception e) {
+                fragment.addError(e.getMessage());
+                persistError(e, null, fragment.getClass().getSimpleName(), fragment.getExternalReference(),fragment.getId());
+            }
+        }
+    }
+
+    void executeFragmentQuery(Fragment fragment) {
+
+        Collection<String> queryParameters = Arrays.asList(fragment.getParameters().split(","));
+
+        if (queryParameters.isEmpty()) throw new InvalidStateException(format("No query parameters specified for fragment '%s'.", fragment.getExternalReference()));
+
+        final String query = fragment.getQuery();
+
+        if (!hasText(fragment.getQuery())) throw new InvalidStateException(format("No query specified for fragment '%s'.", fragment.getExternalReference()));
+
+        if (query.startsWith("delete") || query.startsWith("update")) throw new InvalidInputException("Cannot execute SQL query. Query cannot contain 'delete' or 'update'.");
+
+        final Collection<Map<String, String>> values = jdbcTemplate.query(query, new RowMapper<Map<String, String>>() {
+
+            @Override
+            public Map<String, String> mapRow(ResultSet rs, int rowNum) throws SQLException
+            {
+
+                Map<String, String> result = new HashMap<String, String>();
+
+                for (String key : queryParameters) {
+
+                    result.put(key, rs.getString(key));
+                }
+
+                return result;
+            }
+
+        });
+
+        fragment.setResultParameters(values);
+    }
+
+    private void validateTemplates(Collection<Fragment> fragments) {
+
+        for (Fragment fragment : fragments) {
+
+            try {
+
+                ClassPathResource resource = new ClassPathResource("templates/shared/macros.ftl");
+                byte[] data = FileCopyUtils.copyToByteArray(resource.getInputStream());
+                String macros = new String(data, StandardCharsets.UTF_8);
+
+                getTemplate(fragment, macros).process(getModel(fragment), new StringWriter());
+
+            } catch (Exception e) {
+                fragment.addError(e.getMessage());
+                persistError(e, null, fragment.getClass().getSimpleName(), fragment.getExternalReference(), fragment.getId());
+            }
+        }
+    }
+
+    private Map<String, Object> getModel(Fragment fragment) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("fragment", fragment);
+        return map;
+    }
+
+    @SuppressWarnings("deprecation")
+    private Template getTemplate(Fragment fragment, String macros) throws IOException
+    {
+        Configuration cfg = new Configuration();
+        StringTemplateLoader templateLoader = new StringTemplateLoader();
+        templateLoader.putTemplate("template", macros + fragment.getDesign());
+        cfg.setTemplateLoader(templateLoader);
+        return  cfg.getTemplate("template");
+    }
+
+
+    @Async("asyncExecutor")
+    public CompletableFuture<List<Fragment>> getAll()
+    {
+        return fragmentRepository.getAll();
+    }
+
+    public Fragment get(Long id) {
+        return fragmentRepository.get(id);
+    }
+
+    public void update(Fragment fragment) {
+        fragmentRepository.update(fragment);
+    }
+}

@@ -1,6 +1,6 @@
 <#include '../shared/header.ftl' />
 
-<@pageHeader title='Dashboards' uri='/configuration/dashboards'/>
+<@pageHeader title="Errors" uri="/configuration/errors"/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -8,25 +8,29 @@
             <div class="card">
                 <div class="card-header">&nbsp;</div>
                 <div class="card-body">
-                    <#if dashboards?size gt 0>
+                    <#if errors?? && errors?size gt 0>
                         <table class="data-table" class="display" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th width="70%">URI</th>
-                                    <th class="text-right" width="80%">Enabled</th>
+                                    <th width="25%">Reference</th>
+                                    <th width="25%">Class</th>
+                                    <th width="25%">Exception</th>
+                                    <th width="25%">Created</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <#list dashboards as d>
+                            <#list errors as e>
                                 <tr>
-                                    <td><p><a href="/configuration/dashboards/${d.id}">${d.uri!''}</a></p></td>
-                                    <td class="text-right"><p><@iconBoolean d.enabled /></p></td>
+                                    <td><p><a href="/configuration/errors/${e.id}">${e.entityReference!''}</a></p></td>
+                                    <td><p>${e.entity}</p></td>
+                                    <td><p>${e.exception}</p></td>
+                                    <td><p>${e.created?string('dd/MM/yyyy HH:mm:ss')}</p></td>
                                 </tr>
                             </#list>
                             </tbody>
                         </table>
                     <#else>
-                        <table><tr><td>There are currently no dashboards defined.</td></tr></table>
+                        <table><tr><td>There are currently no fragments defined.</td></tr></table>
                     </#if>
                 </div>
             </div>

@@ -1,11 +1,11 @@
 <#include '../../shared/header.ftl' />
 
-<@pageHeader title="Dashboards"/>
+<@pageHeader title='Dashboards' uri='/configuration/fragments' />
 
 <div class="container h-100">
     <div class="row h-100">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card margin-bottom">
                 <div class="card-header">Detail</div>
                 <div class="card-body">
                     <#if item??>
@@ -15,12 +15,12 @@
 
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right">External Reference*</label></div>
-                            <div class="col-10"><input name="externalReference" class="form-control no-padding" type="text" value="${item.externalReference!''}" placeholder="Username" readonly></div>
+                            <div class="col-10"><input name="externalReference" class="form-control no-padding" type="text" value="${item.externalReference!''}" placeholder="External reference" <#if item.externalReference?has_content>readonly</#if>></div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right">Uri*</label></div>
-                            <div class="col-10"><input name="uri" class="form-control no-padding" type="text" value="${item.uri!''}" placeholder="Uri" readonly></div>
+                            <div class="col-10"><input name="uri" class="form-control no-padding" type="text" value="${item.uri!''}" placeholder="Uri" <#if item.uri?has_content>readonly</#if>></div>
                         </div>
 
                         <div class="form-group row">

@@ -19,8 +19,10 @@ insert into menu (parent_id, external_reference, uri, title, visible, created, c
 select id, 'configuration/properties', '/configuration/properties', 'Properties', true, now(), 'system', now(), 'system', 1 from menu where external_reference = 'configuration';
 
 insert into menu (parent_id, external_reference, uri, title, visible, created, created_user, last_updated, last_updated_user, item_order)
-select id, 'configuration/users', '/configuration/users', 'Users', true, now(), 'system', now(), 'system', 3 from menu where external_reference = 'configuration';
+select id, 'configuration/dashboards', '/configuration/dashboards', 'Dashboards', true, now(), 'system', now(), 'system', 2 from menu where external_reference = 'configuration';
 
 insert into menu (parent_id, external_reference, uri, title, visible, created, created_user, last_updated, last_updated_user, item_order)
-select id, 'configuration/dashboards', '/configuration/dashboards', 'Dashboards', true, now(), 'system', now(), 'system', 4 from menu where external_reference = 'configuration';
+select id, 'configuration/dashboards', '/configuration/fragments', 'Fragments', true, now(), 'system', now(), 'system', 3 from menu where external_reference = 'configuration';
 
+insert into menu (parent_id, external_reference, uri, title, visible, created, created_user, last_updated, last_updated_user, item_order)
+select id, 'configuration/errors', '/configuration/errors', 'Errors', true, now(), 'system', now(), 'system', 4 from menu where external_reference = 'configuration';

@@ -9,7 +9,7 @@
                 <div class="card-header">&nbsp;</div>
                 <div class="card-body">
                     <#if dashboards?size gt 0>
-                        <table class="data-table" class="display" style="width:100%;">
+                        <table class="data-table" class="display">
                             <thead>
                                 <tr>
                                     <th width="70%">URI</th>

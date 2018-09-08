@@ -9,7 +9,7 @@
                 <div class="card-header">&nbsp;</div>
                 <div class="card-body">
                     <#if errors?? && errors?size gt 0>
-                        <table class="data-table" class="display" style="width:100%;">
+                        <table class="data-table" class="display">
                             <thead>
                                 <tr>
                                     <th width="25%">Reference</th>

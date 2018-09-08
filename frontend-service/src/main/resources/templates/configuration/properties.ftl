@@ -1,6 +1,6 @@
 <#include '../shared/header.ftl' />
 
-<@pageHeader title="Dashboards"/>
+<@pageHeader title="Properties" uri="/configuration/properties"/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -8,31 +8,30 @@
             <div class="card">
                 <div class="card-header">&nbsp;</div>
                 <div class="card-body">
-                    <#if dashboards?size gt 0>
-                        <table class="data-table" class="display" style="width:100%;">
+                    <#if properties?? && properties?size gt 0>
+                        <table class="data-table" class="display">
                             <thead>
                                 <tr>
-                                    <th width="70%">URI</th>
-                                    <th class="text-right" width="80%">Enabled</th>
+                                    <th width="25%">Reference</th>
+                                    <th width="25%">Value</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <#list dashboards as d>
+                            <#list properties as p>
                                 <tr>
-                                    <td><p><a href="/configuration/dashboards/${d.id}">${d.uri!''}</a></p></td>
-                                    <td class="text-right"><p><@iconBoolean d.enabled /></p></td>
+                                    <td><p><a href="/configuration/properties/${p.externalReference}">${p.externalReference!''}</a></p></td>
+                                    <td><p>${p.value!''}</p></td>
                                 </tr>
                             </#list>
                             </tbody>
                         </table>
                     <#else>
-                        <table><tr><td>There are currently no dashboards defined.</td></tr></table>
+                        <table><tr><td>There are currently no properties defined.</td></tr></table>
                     </#if>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <#include '../shared/footer.ftl' />

@@ -19,15 +19,17 @@
 </#macro>
 
 <#macro dashboardFragment reference fragments>
-okok
     <#if fragments[reference]??>
         <#assign fragment = fragments[reference]>
-        <div class="fragment">
         <#if fragment.errors?? && fragment.errors?size gt 0>
-            <div class="alert alert-warning">Failed to load fragment. See errors for more information.</div>
+            <div class="card module">
+                <div class="card-header">&nbsp;</div>
+                <div class="card-body">
+                    <div class="alert alert-warning">Failed to load fragment. See errors for more information.</div>
+                </div>
+            </div>
         <#else>
             <@fragment.design?interpret />
         </#if>
-        </div>
     </#if>
 </#macro>

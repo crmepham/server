@@ -20,24 +20,6 @@ create table user (
 CREATE INDEX user_username ON `user` (username);
 CREATE INDEX user_password ON `user` (password);
 
-create table property (
-	id bigint(10) unsigned not null auto_increment,
-	external_reference varchar(50) not null,
-	value varchar(2048),
-	description varchar(250),
-	created datetime not null,
-	created_user varchar(50) not null,
-	last_updated datetime,
-	last_updated_user varchar(50),
-	visible bit default false,
-	deleted bit default false,
-	deleted_user varchar(50),
-	primary key (id),
-	unique(external_reference)
-) engine=InnoDB default charset=utf8;
-
-CREATE INDEX property_external_reference ON `property` (external_reference);
-
 create table menu (
 	id bigint(10) unsigned not null auto_increment,
 	external_reference varchar(50) not null,
@@ -123,6 +105,22 @@ create table error (
 
 CREATE INDEX error_entity_reference ON `error` (entity_reference);
 CREATE INDEX error_entity ON `error` (entity);
+
+create table property (
+	id bigint(10) unsigned not null auto_increment,
+	external_reference varchar(50) not null,
+	value varchar(2048),
+	description varchar(500),
+	created datetime not null,
+	created_user varchar(50) not null,
+	last_updated datetime,
+	last_updated_user varchar(50),
+	deleted bit default false,
+	deleted_user varchar(50),
+	primary key (id)
+) engine=InnoDB default charset=utf8;
+
+CREATE INDEX property_external_reference ON `property` (external_reference);
 
 insert into user (username, password, enabled, created, created_user)
 values ('crm', 'AAER8]HR6UnR4knR4YnRnN[]', true, now(), 'system');

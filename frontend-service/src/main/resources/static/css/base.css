@@ -31,3 +31,27 @@ textarea {
 .margin-bottom {
     margin-bottom: 60px;
 }
+.body-wrapper {
+    padding: 20px 15px;
+}
+@media (max-width: 800px) {
+    .body-wrapper {
+        padding: 0;
+    }
+}
+.module {
+    margin-bottom: 20px;
+}
+.module-title {
+
+}
+.module-options {
+    opacity: 0.3;
+    font-size: 1em;
+    line-height: 20px;
+}
+.module-options:hover {
+    opacity: 1.0;
+    cursor: pointer;
+
+}

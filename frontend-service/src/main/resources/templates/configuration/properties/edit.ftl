@@ -1,6 +1,6 @@
 <#include '../../shared/header.ftl' />
 
-<@pageHeader title='Dashboards' uri='/configuration/fragments' />
+<@pageHeader title='Properties' uri='/configuration/properties' />
 
 <div class="container h-100">
     <div class="row h-100">
@@ -9,29 +9,23 @@
                 <div class="card-header">Detail</div>
                 <div class="card-body">
                     <#if item??>
-					<form name="dashboard" id="updateDashboardScreenForm" action="/configuration/dashboards/update" method="post">
+					<form name="property" action="/configuration/properties/update" method="post">
 
                         <input type="hidden" value="${item.id}" name="id">
 
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right">External Reference*</label></div>
-                            <div class="col-10"><input name="externalReference" class="form-control no-padding" type="text" value="${item.externalReference!''}" placeholder="External reference" <#if item.externalReference?has_content>readonly</#if> required></div>
+                            <div class="col-10"><input name="externalReference" class="form-control no-padding" type="text" value="${item.externalReference!''}" placeholder="External reference" readonly></div>
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Uri*</label></div>
-                            <div class="col-10"><input name="uri" class="form-control no-padding" type="text" value="${item.uri!''}" placeholder="Uri" <#if item.uri?has_content>readonly</#if> required></div>
+                            <div class="col-2"><label class="col-form-label right">Description</label></div>
+                            <div class="col-10"><input name="description" class="form-control no-padding" type="text" value="${item.description!''}" readonly></div>
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Content*</label></div>
-                            <div class="col-10"><textarea id="content" name="content">${item.content!''}</textarea></div>
-                        </div>
-
-                        <div class="form-group row">
-							<#assign checked = item.enabled?string('checked', '')/>
-                            <div class="col-2"><label class="col-form-label right">Enabled</label></div>
-                            <div class="col-10"><input name="enabled" type="checkbox" ${checked}></div>
+                            <div class="col-2"><label class="col-form-label right">Value</label></div>
+                            <div class="col-10"><textarea name="value">${item.value!''}</textarea></div>
                         </div>
 
                         <div class="form-group row">

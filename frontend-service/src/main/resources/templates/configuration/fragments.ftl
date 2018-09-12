@@ -1,6 +1,6 @@
 <#include '../shared/header.ftl' />
 
-<@pageHeader title="Fragments" uri="/configuration/fragments"/>
+<@pageHeader title="Fragments" uri="/configuration/fragments" action="Create" actionUri="/configuration/fragments/create"/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -30,10 +30,6 @@
                     <#else>
                         <table><tr><td>There are currently no fragments defined.</td></tr></table>
                     </#if>
-                    <br>
-                    <a href="/configuration/fragments/create">
-                        <button class="btn btn-primary btn-sm float-right">Create</button>
-                    </a>
                 </div>
             </div>
         </div>

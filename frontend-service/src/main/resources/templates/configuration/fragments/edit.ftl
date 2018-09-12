@@ -1,6 +1,6 @@
 <#include '../../shared/header.ftl' />
 
-<@pageHeader title='Fragments' uri='/configuration/fragments' />
+<@pageHeader title="Fragments" uri="/configuration/fragments" action="Create" actionUri="/configuration/fragments/create"/>
 
 <div class="container h-100">
     <div class="row h-100">

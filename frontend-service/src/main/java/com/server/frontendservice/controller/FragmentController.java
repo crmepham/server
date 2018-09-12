@@ -30,6 +30,14 @@ public class FragmentController extends BaseController
         model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
     }
 
+    @GetMapping(value = PATH + "/create")
+    public String createView(Model model)
+    {
+        model.addAttribute("item", new Fragment());
+
+        return "configuration/fragments/edit";
+    }
+
     @GetMapping(PATH + "/{id}")
     public String dashboard(Model model, @PathVariable("id") Long id)
     {
@@ -44,20 +52,7 @@ public class FragmentController extends BaseController
                          @ModelAttribute("fragment") Fragment fragment,
                          RedirectAttributes redirect)
     {
-        fragmentService.update(fragment);
-        model.addAttribute("item", fragment);
-
-        toast("Successfully updated fragment", redirect);
-
-        return "redirect:/configuration/fragments";
-    }
-
-    @GetMapping(value = PATH + "/create")
-    public String createView(Model model)
-    {
-        model.addAttribute("item", new Fragment());
-
-        return "configuration/fragments/edit";
+        return create(model, fragment, redirect);
     }
 
     @PostMapping(value = PATH + "/create")

@@ -12,8 +12,8 @@
                         <table class="data-table" class="display">
                             <thead>
                                 <tr>
-                                    <th width="25%">Reference</th>
-                                    <th width="25%">Value</th>
+                                    <th width="20%">Reference</th>
+                                    <th width="80%">Value</th>
                                 </tr>
                             </thead>
                             <tbody>

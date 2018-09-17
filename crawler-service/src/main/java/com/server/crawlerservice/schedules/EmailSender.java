@@ -15,8 +15,8 @@ public class EmailSender {
      * Get the data service to send any pending
      * emails every 5 minutes.
      */
-    @Scheduled(fixedRate = 3000)
-    //@Scheduled(cron = "*/5 * * * * ?")
+    //@Scheduled(fixedRate = 3000)
+    @Scheduled(cron = "*/5 * * * * ?")
     public void sendQueuedEmails() {
         emailRepository.send();
     }

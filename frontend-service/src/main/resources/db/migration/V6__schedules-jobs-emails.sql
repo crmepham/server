@@ -86,7 +86,6 @@ create table email (
 
 CREATE INDEX email_to_email ON `email` (to_email);
 CREATE INDEX email_from_email ON `email` (from_email);
-CREATE INDEX email_subject ON `email` (subject);
 CREATE INDEX email_sent ON `email` (sent);
 
 create table action (

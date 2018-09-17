@@ -71,6 +71,10 @@ public class EmailService {
             emailSender.send(message);
 
             // If bulk sending is need see: https://github.com/nithril/smtp-connection-pool
+            email.setState(Email.STATE_SENT);
+            email.setSent(true);
+            email.setLastUpdated(new Date());
+            emailRepository.save(email);
 
         } catch (Exception e) {
             email.setRetryCount(email.getRetryCount()+1);
@@ -79,5 +83,13 @@ public class EmailService {
             email.setLastUpdated(new Date());
             emailRepository.save(email);
         }
+    }
+
+    public Email get(long id) {
+        return emailRepository.getOne(id);
+    }
+
+    public List<Email> getAll() {
+        return emailRepository.findAllByDeletedFalseOrderByLastUpdatedDesc();
     }
 }

@@ -39,25 +39,7 @@
                             <div class="col-10"><textarea id="content" readonly>${item.stackTrace!''}</textarea></div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Created</label></div>
-                            <div class="col-10"><input class="form-control no-padding" type="text" value="${item.created?string('dd/MM/yyyy HH:mm:ss')!''}" readonly></div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Created User</label></div>
-                            <div class="col-10"><input class="form-control no-padding" type="text" value="${item.createdUser!''}" readonly></div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Last Updated</label></div>
-                            <div class="col-10"><input class="form-control no-padding" type="text" value="${item.lastUpdated?string('dd/MM/yyyy HH:mm:ss')}" readonly></div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Last Updated User</label></div>
-                            <div class="col-10"><input class="form-control no-padding" type="text" value="${item.lastUpdatedUser!''}" readonly></div>
-                        </div>
+                        <@commonMeta item=item/>
 
                         <a href="/configuration/errors"><button type="button" id="button-cancel" class="btn btn-warning btn-sm float-right">Back</button></a>
                     <#else>

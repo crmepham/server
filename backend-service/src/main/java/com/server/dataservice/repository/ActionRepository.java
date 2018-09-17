@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
-    List<Action> findByClassNameAndStateAndDeletedFalse(String className, String state);
+    List<Action> findByClassNameAndStateAndDeletedFalseOrderByLastUpdatedDesc(String className, String state);
+    List<Action> findAllByDeletedFalseOrderByLastUpdatedDesc();
 }

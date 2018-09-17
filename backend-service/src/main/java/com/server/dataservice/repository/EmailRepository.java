@@ -12,4 +12,5 @@ import java.util.List;
 public interface EmailRepository extends JpaRepository<Email, Long> {
 
     List<Email> findBySentFalseAndRetryCountLessThanAndDeletedFalse(int retryThreshold);
+    List<Email> findAllByDeletedFalseOrderByLastUpdatedDesc();
 }

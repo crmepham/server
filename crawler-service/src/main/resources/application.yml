@@ -13,3 +13,7 @@ logging:
   file: server.log
   level:
     org.slf4j: 'INFO'
+
+base:
+    api:
+        uri: http://localhost:9030/

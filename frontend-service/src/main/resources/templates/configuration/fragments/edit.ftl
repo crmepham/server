@@ -60,6 +60,8 @@
                             <div class="col-10"><textarea id="design" name="design">${item.design!''}</textarea></div>
                         </div>
 
+                        <@commonMeta item=item/>
+
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right"></label></div>
                             <div class="col-10">* denotes required fields.</div>

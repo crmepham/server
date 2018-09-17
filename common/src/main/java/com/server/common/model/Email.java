@@ -1,11 +1,14 @@
 package com.server.common.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="email")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Email extends BaseEntity {
 
     public static final String STATE_PENDING = "pending";
@@ -35,6 +38,10 @@ public class Email extends BaseEntity {
 
     @Column(name = "retry_count")
     private int retryCount;
+
+    public Email() {
+        super();
+    }
 
     public Email(String to, String from, String subject, String body)
     {

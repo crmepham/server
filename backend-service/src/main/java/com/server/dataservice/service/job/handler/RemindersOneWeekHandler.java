@@ -57,7 +57,7 @@ public class RemindersOneWeekHandler implements JobHandler {
     @Override
     public void execute(String className) {
 
-        List<Action> actions = actionRepository.findByClassNameAndStateAndDeletedFalse(className, Action.STATE_STARTED);
+        List<Action> actions = actionRepository.findByClassNameAndStateAndDeletedFalseOrderByLastUpdatedDesc(className, Action.STATE_STARTED);
         Action action = actions.iterator().next();
 
         // Get the date, 7 days from now
@@ -96,7 +96,7 @@ public class RemindersOneWeekHandler implements JobHandler {
         emailService.queue(subject, createBody(reminders), recipients);
 
         action.setState(Action.STATE_COMPLETED);
-        action.setResultMessage(String.format("Queued emails for the following recipients:%s%nReminders:%n%s",
+        action.setResultMessage(String.format("Queued emails for the following recipients:%s\nReminders:\n%s",
                 recipients, reminders.stream().map(Reminder::getInstruction).collect(Collectors.toList())));
         action.setLastUpdated(new Date());
         actionRepository.save(action);

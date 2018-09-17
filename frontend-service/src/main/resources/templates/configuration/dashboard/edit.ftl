@@ -34,25 +34,7 @@
                             <div class="col-10"><input name="enabled" type="checkbox" ${checked}></div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Created</label></div>
-                            <div class="col-10"><input name="created" class="form-control no-padding" type="text" value="${item.created?string('dd/MM/yyyy HH:mm:ss')!''}" placeholder="Created" id="" readonly></div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Created User</label></div>
-                            <div class="col-10"><input name="createdUser" class="form-control no-padding" type="text" value="${item.createdUser!''}" placeholder="Created User" id="" readonly></div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Last Updated</label></div>
-                            <div class="col-10"><input name="lastUpdated" class="form-control no-padding" type="text" value="${item.lastUpdated?string('dd/MM/yyyy HH:mm:ss')}" placeholder="Last Updated" id="" readonly></div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-2"><label class="col-form-label right">Last Updated User</label></div>
-                            <div class="col-10"><input name="lastUpdatedUser" class="form-control no-padding" type="text" value="${item.lastUpdatedUser!''}" placeholder="Last Updated User" id="" readonly></div>
-                        </div>
+                        <@commonMeta item=item/>
 
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right"></label></div>

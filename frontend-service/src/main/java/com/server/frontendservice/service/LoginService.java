@@ -7,9 +7,11 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
 
+@Transactional
 @Service
 public class LoginService {
 
@@ -62,9 +64,5 @@ public class LoginService {
         } catch (EmptyResultDataAccessException e) {
             throw new BadCredentialsException(format("Authentication failed. No user found with username '%s'.", username));
         }
-    }
-
-    public void setEncryptionService(EncryptionService encryptionService) {
-        this.encryptionService = encryptionService;
     }
 }

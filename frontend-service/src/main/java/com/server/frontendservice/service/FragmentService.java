@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import static java.lang.String.format;
 import static org.springframework.util.StringUtils.hasText;
 
+@Transactional
 @Service
 public class FragmentService extends BaseService
 {

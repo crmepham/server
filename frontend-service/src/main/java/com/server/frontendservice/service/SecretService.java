@@ -7,11 +7,13 @@ import com.server.frontendservice.repository.PropertyRepository;
 import com.server.frontendservice.repository.SecretRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@Transactional
 @Service
 public class SecretService extends BaseService
 {

@@ -21,7 +21,6 @@ public class SecretRepository extends BaseRepository
     private static final String GET_ALL = "secrets/get-all";
     private static final String GET_BY_ID = "secrets/get-by-id/";
     private static final String CREATE = "secrets/create";
-    private static final String UPDATE = "secrets/update";
     private static final String DELETE = "secrets/delete";
     private static final String CREATE_PROPERTY = "secrets/create-property";
     private static final String DELETE_PROPERTY = "secrets/delete-property/";
@@ -48,11 +47,6 @@ public class SecretRepository extends BaseRepository
     public void create(Secret secret) {
 
         template.exchange(baseUri + CREATE, POST, postJson(secret), Secret.class);
-    }
-
-    public void update(Secret secret) {
-
-        template.exchange(baseUri + UPDATE, POST, postJson(secret), Secret.class);
     }
 
     public void createProperty(SecretProperty secretProperty) {

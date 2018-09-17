@@ -54,3 +54,7 @@ textarea {
     opacity: 1.0;
     cursor: pointer;
 }
+.module-options-create {
+    position: relative;
+    top: 1px;
+}

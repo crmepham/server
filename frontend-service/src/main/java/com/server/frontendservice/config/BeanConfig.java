@@ -2,6 +2,7 @@ package com.server.frontendservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration

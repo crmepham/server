@@ -82,18 +82,20 @@ public class SecretController extends BaseController
 
         secretService.update(secret);
 
-        CompletableFuture<List<Secret>> all = secretService.getAll();
+        if (isNew)
+        {
+            CompletableFuture<List<Secret>> all = secretService.getAll();
+            CompletableFuture.allOf(all).join();
+            Collections.reverse(all.get());
+            secret = all.get().iterator().next();
 
-        CompletableFuture.allOf(all).join();
+        }
 
-        Collections.reverse(all.get());
-
-        Secret persisted = all.get().iterator().next();
-        model.addAttribute("item", persisted);
+        model.addAttribute("item", secret);
 
         toast(format("Successfully %s secret", isNew ? "created" : "updated"), redirect);
 
-        return format("redirect:/secrets/%s", persisted.getId());
+        return format("redirect:/secrets/%s", secret.getId());
     }
 
     @PostMapping(value = "secrets/{id}/property/create")

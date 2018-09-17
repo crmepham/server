@@ -1,12 +1,8 @@
 server:
   port: 9030
   compression:
-      enabled: true
-      mime-types: application/json,application/xml,text/html,text/xml,text/plain
-
-frontend:
-  url: http://localhost:9000
-  url-allowed: '*'
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 logging:
   path: /home/crm/jenkins/workspace/server-frontend
@@ -15,13 +11,33 @@ logging:
     org.slf4j: 'DEBUG'
 
 spring:
-    jpa:
-        database: MYSQL
-        hibernate:
-            ddl-auto: validate
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: validate
 
-    datasource:
-        url: jdbc:mysql://localhost:3306/server2
-        username: server2
-        password: server2
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://localhost:3306/server2
+    username: server2
+    password: server2
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: final60@gmail.com
+    password: vnovgidkjqknfigc
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+
+email:
+  from: crmepham@hotmail.co.uk
+  retry:
+    threshold: 3

@@ -4,9 +4,11 @@ import com.server.common.model.ApplicationError;
 import com.server.frontendservice.repository.ErrorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class ErrorService extends BaseService
 {

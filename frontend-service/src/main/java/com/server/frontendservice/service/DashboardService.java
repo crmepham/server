@@ -5,12 +5,14 @@ import com.server.frontendservice.repository.DashboardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@Transactional
 @Service
 public class DashboardService
 {

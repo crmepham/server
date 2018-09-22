@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class ErrorController
 {
-    private static final String PATH = "configuration/errors";
+    private static final String PATH = "reporting/errors";
 
     @Autowired
     private ErrorService errorService;
@@ -25,12 +25,12 @@ public class ErrorController
         model.addAttribute("errors", all);
         model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/errors", "font-awesome.min"));
         model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
-        return "configuration/errors";
+        return "reporting/errors";
     }
 
     @GetMapping(PATH + "/{id}")
     public String errors(Model model, @PathVariable("id") long id) {
         model.addAttribute("item", errorService.getById(id));
-        return "configuration/errors/detail";
+        return "reporting/errors/detail";
     }
 }

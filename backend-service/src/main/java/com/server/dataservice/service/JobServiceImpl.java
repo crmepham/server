@@ -1,19 +1,24 @@
 package com.server.dataservice.service;
 
 import com.server.common.model.Action;
+import com.server.common.model.ApplicationError;
 import com.server.common.model.Job;
 import com.server.common.model.Schedule;
 import com.server.dataservice.repository.ActionRepository;
+import com.server.dataservice.repository.ErrorRepository;
 import com.server.dataservice.repository.JobRepository;
 import com.server.dataservice.repository.ScheduleRepository;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -36,7 +41,15 @@ public class JobServiceImpl
     private ScheduleRepository scheduleRepository;
 
     @Autowired
+    private ErrorRepository errorRepository;
+
+    @Autowired
     private Scheduler scheduler;
+
+    public void start() {
+        List<Job> jobs = jobRepository.findByEnabledTrueAndDeletedFalse();
+        jobs.forEach(j -> invoke(j, false));
+    }
 
     public void invoke(long id, boolean runOnce) {
 
@@ -45,9 +58,13 @@ public class JobServiceImpl
             actionRepository.save(new Action(format("Could not find job with id %s.", id)));
         }
 
-        Job job = optional.get();
-        Schedule schedule = scheduleRepository.getOne(job.getScheduleId());
+        invoke(optional.get(), runOnce);
 
+    }
+
+    public void invoke(Job job, boolean runOnce) {
+
+        Schedule schedule = scheduleRepository.getOne(job.getScheduleId());
 
         // start the action.
         Action action = actionRepository.save(new Action(job));
@@ -82,6 +99,31 @@ public class JobServiceImpl
             action.setLastUpdated(new Date());
             action.setLastUpdatedUser("system");
             actionRepository.save(action);
+        }
+    }
+
+    public void stop(Schedule schedule, List<Job> jobs)
+    {
+        jobs.forEach(j -> {
+            stop(schedule, j);
+            j.setEnabled(false);
+            j.setLastUpdated(new Date());
+        });
+
+        jobRepository.saveAll(jobs);
+    }
+
+    public void stop(Schedule schedule, Job j) {
+        try
+        {
+            scheduler.unscheduleJob(new TriggerKey(j.getExternalReference(), schedule.getExternalReference()));
+        } catch (SchedulerException e) {
+            ApplicationError error = new ApplicationError();
+            error.setEntityId(j.getId());
+            error.setEntity(j.getClass().getSimpleName());
+            error.setException(e.getMessage());
+            error.setContext("Could not unschedule this job.");
+            errorRepository.save(error);
         }
     }
 }

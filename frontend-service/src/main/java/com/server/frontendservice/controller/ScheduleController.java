@@ -105,7 +105,7 @@ public class ScheduleController extends BaseController
     {
         scheduleService.invokeJob(id);
 
-        toast("Job has started. See action %s for the progress of the job.", redirect);
+        toast("Job has started. See actions for the progress of the job.", redirect);
 
         return format("redirect:/configuration/schedules/job/%s", id);
     }

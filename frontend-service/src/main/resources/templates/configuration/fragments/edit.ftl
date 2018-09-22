@@ -67,7 +67,7 @@
                             <div class="col-10">* denotes required fields.</div>
                         </div>
 
-                        <button class="btn btn-primary btn-sm float-right">Create</button>
+                        <button class="btn btn-primary btn-sm float-right"><#if item.id??>Update<#else>Create</#if></button>
                         <a href="/configuration/fragments">
                             <button type="button" id="button-cancel" class="btn btn-warning btn-sm float-right">Cancel</button>
                         </a>

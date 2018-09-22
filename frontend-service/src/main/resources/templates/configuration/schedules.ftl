@@ -12,9 +12,9 @@
                         <table class="data-table" class="display">
                             <thead>
                                 <tr>
-                                    <th width="40%">Title</th>
-                                    <th width="40%">Cron Expression</th>
-                                    <th width="20%">Enabled</th>
+                                    <th width="25%">Title</th>
+                                    <th width="20%">Cron Expression</th>
+                                    <th width="55%">Description</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -22,7 +22,7 @@
                                 <tr>
                                     <td><p><a href="/configuration/schedules/${s.id}">${s.title!s.externalReference}</a></p></td>
                                     <td><p>${s.cronExpression}</p></td>
-                                    <td class="text-right"><p><@iconBoolean s.enabled /></p></td>
+                                    <td><p>${s.description!''}</p></td>
                                 </tr>
                             </#list>
                             </tbody>

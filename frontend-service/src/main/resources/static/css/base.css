@@ -24,6 +24,15 @@ header {
 a {
     color: #3084df;
 }
+p, h3, h2, h1 {
+    color: #565656;
+}
+h3 {
+    font-size: 1.1em;
+}
+th {
+    font-weight: normal;
+}
 textarea {
     width: 100%;
     min-height: 300px;
@@ -57,4 +66,22 @@ textarea {
 .module-options-create {
     position: relative;
     top: 1px;
+}
+#global-search {
+    width: 25%;
+}
+.normal-table {
+    table-layout: fixed;
+    width: 100% !important;
+    word-wrap: break-word;
+}
+.normal-table th {
+    background: #005ec4;
+    color: #fff;
+}
+.normal-table > tbody > td {
+    max-width: 100px !important;
+}
+.normal-table > tbody > tr:nth-child(odd){
+    background: #f0f7fe;
 }

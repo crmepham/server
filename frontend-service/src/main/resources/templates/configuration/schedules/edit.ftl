@@ -34,11 +34,11 @@
                             <div class="col-10"><input name="cronExpression" class="form-control no-padding" type="text" placeholder="Uri" value="${item.cronExpression!''}" required></div>
                         </div>
 
-                        <div class="form-group row">
+                        <#--<div class="form-group row">
 							<#assign checked = item.enabled?string('checked', '')/>
                             <div class="col-2"><label class="col-form-label right">Enabled</label></div>
                             <div class="col-10"><input name="enabled" type="checkbox" ${checked}></div>
-                        </div>
+                        </div>-->
 
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right"></label></div>

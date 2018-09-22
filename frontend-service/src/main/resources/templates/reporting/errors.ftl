@@ -1,6 +1,6 @@
 <#include '../shared/header.ftl' />
 
-<@pageHeader title="Errors" uri="/configuration/errors"/>
+<@pageHeader title="Errors" uri="/reporting/errors"/>
 
 <div class="container h-100">
     <div class="row h-100">

@@ -18,6 +18,12 @@ public class ScheduleService
     @Autowired
     private JobRepository jobRepository;
 
+    @Autowired
+    private JobServiceImpl jobService;
+
+    @Autowired
+    private ScheduleServiceImpl scheduleService;
+
     public List<Schedule> getAll() {
         return scheduleRepository.findByDeletedFalse();
     }
@@ -27,6 +33,13 @@ public class ScheduleService
     }
 
     public void create(Schedule schedule) {
+
+        final Schedule previousSchedule = scheduleRepository.getOne(schedule.getId());
+
+        if (previousSchedule.isEnabled() && !schedule.isEnabled()) {
+            scheduleService.stop(schedule);
+        }
+
         scheduleRepository.save(schedule);
     }
 
@@ -39,6 +52,16 @@ public class ScheduleService
     }
 
     public void createJob(Job job) {
+
+        final Job previousJob = jobRepository.getOne(job.getId());
+        final Schedule schedule = scheduleRepository.getOne(job.getScheduleId());
+
+        if (previousJob.isEnabled() && !job.isEnabled()) {
+            jobService.stop(schedule, job);
+        } else if (!previousJob.isEnabled() && job.isEnabled()) {
+            jobService.invoke(job, false);
+        }
+
         jobRepository.save(job);
     }
 

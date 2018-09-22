@@ -37,12 +37,14 @@ public class SearchRepository {
         final Property property = propertyRepository.findByExternalReference(GLOBAL_SEARCH);
         if (property == null || !hasText(property.getValue())) {
             log.debug("No property or property value is empty.");
+            System.out.println("No property or property value is empty.");
             return Collections.emptyMap();
         }
 
         final String[] tables = property.getValue().split(";");
         if (tables.length == 0 ) {
             log.debug("No table could be parsed from property.");
+            System.out.println("No table could be parsed from property.");
             return Collections.emptyMap();
         }
 
@@ -52,6 +54,7 @@ public class SearchRepository {
             final String title = table.split(":")[0].split("=")[0];
             List<Object> rows = searchTable(table, text);
             log.debug("Found {} rows for table {}", rows.size(), table);
+            System.out.println(String.format("Found %s rows for table %s", rows.size(), table));
             results.put(title, rows);
         }
 
@@ -67,6 +70,7 @@ public class SearchRepository {
         final String sql = buildQuery(entity, queryColumns, searchWords);
 
         log.debug("Prepared SQL: ", sql);
+        System.out.println("Prepared SQL: "  + sql);
 
         try {
             Class<?> clazz = Class.forName("com.server.common.model." + entity);
@@ -75,6 +79,7 @@ public class SearchRepository {
             return query.getResultList();
         } catch (ClassNotFoundException e) {
             log.error("class cast exception: ", e.getMessage());
+            System.out.println("class cast exception: " + e.getMessage());
             return Collections.emptyList();
         }
     }

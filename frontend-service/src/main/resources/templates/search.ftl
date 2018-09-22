@@ -58,7 +58,7 @@
                         </#if>
 
                     <#else>
-                        <p>Not results found.</p>
+                        <p>No results found.</p>
                     </#if>
                 </div>
             </div>

@@ -2,6 +2,8 @@ package com.server.dataservice.service;
 
 import com.server.common.model.Property;
 import com.server.dataservice.repository.PropertyRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import static org.springframework.util.StringUtils.hasText;
 @Transactional
 @Repository
 public class SearchRepository {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     public static final String GLOBAL_SEARCH = "global_search";
 
@@ -63,6 +67,7 @@ public class SearchRepository {
             populateParamaters(query, searchWords);
             return query.getResultList();
         } catch (ClassNotFoundException e) {
+            log.error("class cast exception: ", e.getMessage());
             return Collections.emptyList();
         }
     }

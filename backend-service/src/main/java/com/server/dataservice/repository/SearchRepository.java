@@ -1,4 +1,4 @@
-package com.server.dataservice.service;
+package com.server.dataservice.repository;
 
 import com.server.common.model.Property;
 import com.server.dataservice.repository.PropertyRepository;
@@ -36,18 +36,23 @@ public class SearchRepository {
 
         final Property property = propertyRepository.findByExternalReference(GLOBAL_SEARCH);
         if (property == null || !hasText(property.getValue())) {
+            log.debug("No property or property value is empty.");
             return Collections.emptyMap();
         }
 
         final String[] tables = property.getValue().split(";");
         if (tables.length == 0 ) {
+            log.debug("No table could be parsed from property.");
             return Collections.emptyMap();
         }
 
         Map<String, List<Object>> results = new HashMap<>();
         for (String table : tables) {
+            log.debug("Searching table ", table);
             final String title = table.split(":")[0].split("=")[0];
-            results.put(title, searchTable(table, text));
+            List<Object> rows = searchTable(table, text);
+            log.debug("Found {} rows for table {}", rows.size(), table);
+            results.put(title, rows);
         }
 
         return results;
@@ -60,6 +65,8 @@ public class SearchRepository {
         final String[] queryColumns = options[1].split(",");
         final String[] searchWords = text.split(" ");
         final String sql = buildQuery(entity, queryColumns, searchWords);
+
+        log.debug("Prepared SQL: ", sql);
 
         try {
             Class<?> clazz = Class.forName("com.server.common.model." + entity);

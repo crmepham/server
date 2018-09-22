@@ -1,6 +1,6 @@
 package com.server.dataservice.controller;
 
-import com.server.dataservice.service.SearchRepository;
+import com.server.dataservice.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

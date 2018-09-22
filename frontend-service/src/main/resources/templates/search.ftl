@@ -1,6 +1,6 @@
 <#include 'shared/header.ftl' />
 
-<@pageHeader title='Reminders' uri='/reminders' action="Create" actionUri="/reminders/create"/>
+<@pageHeader title='Search' uri='/search'/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -65,6 +65,5 @@
         </div>
     </div>
 </div>
-
 
 <#include 'shared/footer.ftl' />

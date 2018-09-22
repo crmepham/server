@@ -13,6 +13,8 @@ logging:
   file: backend.log
   level:
     org.slf4j: 'DEBUG'
+    com.server.*: 'DEBUG'
+    org.springframework.web: 'DEBUG'
 
 spring:
     jpa:

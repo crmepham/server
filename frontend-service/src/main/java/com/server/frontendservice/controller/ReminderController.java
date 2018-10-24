@@ -39,7 +39,7 @@ public class ReminderController extends BaseController
         model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/reminders", "font-awesome.min"));
         model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
 
-        return "applications/reminders";
+        return "/applications/reminders";
     }
 
     @GetMapping("applications/reminders/{id}")

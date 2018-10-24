@@ -23,7 +23,7 @@ import static java.lang.String.format;
 @Controller
 public class SecretController extends BaseController
 {
-    private static final String PATH = "passwords";
+    private static final String PATH = "applications/passwords";
 
     @Autowired
     private SecretService secretService;
@@ -42,10 +42,10 @@ public class SecretController extends BaseController
         model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/secrets", "font-awesome.min"));
         model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
 
-        return "secrets";
+        return "applications/secrets";
     }
 
-    @GetMapping("secrets/{id}")
+    @GetMapping("applications/secrets/{id}")
     public String secret(Model model, @PathVariable("id") long id) throws ExecutionException, InterruptedException {
 
         CompletableFuture<Secret> secret = secretService.getById(id);
@@ -59,10 +59,10 @@ public class SecretController extends BaseController
         model.addAttribute("properties", secretProperties.get());
         model.addAttribute("propertyNames", propertyNames);
         model.addAttribute("types", types);
-        return "/secrets/edit";
+        return "/applications/secrets/edit";
     }
 
-    @GetMapping(value = "secrets/create")
+    @GetMapping(value = "applications/secrets/create")
     public String createView(Model model) throws ExecutionException, InterruptedException
     {
         List<String> types = secretService.getAllTypes();
@@ -70,10 +70,10 @@ public class SecretController extends BaseController
         model.addAttribute("types", types);
         model.addAttribute("item", new Secret());
 
-        return "/secrets/edit";
+        return "/applications/secrets/edit";
     }
 
-    @PostMapping(value = "secrets/update")
+    @PostMapping(value = "applications/secrets/update")
     public String create(Model model,
                          @ModelAttribute("secret") Secret secret,
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
@@ -95,10 +95,10 @@ public class SecretController extends BaseController
 
         toast(format("Successfully %s secret", isNew ? "created" : "updated"), redirect);
 
-        return format("redirect:/secrets/%s", secret.getId());
+        return format("redirect:/applications/secrets/%s", secret.getId());
     }
 
-    @PostMapping(value = "secrets/{id}/property/create")
+    @PostMapping(value = "applications/secrets/{id}/property/create")
     public String createProperty(Model model,
                          @PathVariable("id") long id,
                          @ModelAttribute("secretProperty") SecretProperty secretProperty,
@@ -120,10 +120,10 @@ public class SecretController extends BaseController
 
         toast("Successfully created new property", redirect);
 
-        return format("redirect:/secrets/%s", id);
+        return format("redirect:/applications/secrets/%s", id);
     }
 
-    @GetMapping(value = "secrets/{secretId}/property/{id}/delete")
+    @GetMapping(value = "applications/secrets/{secretId}/property/{id}/delete")
     public String deleteProperty(@PathVariable("secretId") long secretId,
                                  @PathVariable("id") long id,
                                  RedirectAttributes redirect)
@@ -132,10 +132,10 @@ public class SecretController extends BaseController
 
         toast("Successfully deleted property", redirect);
 
-        return format("redirect:/secrets/%s", secretId);
+        return format("redirect:/applications/secrets/%s", secretId);
     }
 
-    @GetMapping(value = "secrets/{id}/delete")
+    @GetMapping(value = "applications/secrets/{id}/delete")
     public String delete(@PathVariable("id") long id,
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
     {
@@ -143,6 +143,6 @@ public class SecretController extends BaseController
 
         toast("Successfully deleted secret", redirect);
 
-        return "redirect:/passwords";
+        return "redirect:/applications/passwords";
     }
 }

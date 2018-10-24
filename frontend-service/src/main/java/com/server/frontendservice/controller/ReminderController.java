@@ -1,10 +1,7 @@
 package com.server.frontendservice.controller;
 
 import com.server.common.model.Reminder;
-import com.server.common.model.Secret;
-import com.server.common.model.SecretProperty;
 import com.server.frontendservice.service.ReminderService;
-import com.server.frontendservice.service.SecretService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +22,7 @@ import static java.lang.String.format;
 @Controller
 public class ReminderController extends BaseController
 {
-    private static final String PATH = "reminders";
+    private static final String PATH = "applications/reminders";
 
     @Autowired
     private ReminderService reminderService;
@@ -42,10 +39,10 @@ public class ReminderController extends BaseController
         model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/reminders", "font-awesome.min"));
         model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
 
-        return "reminders";
+        return "applications/reminders";
     }
 
-    @GetMapping("reminders/{id}")
+    @GetMapping("applications/reminders/{id}")
     public String reminder(Model model, @PathVariable("id") long id) throws ExecutionException, InterruptedException {
 
         CompletableFuture<Reminder> reminder = reminderService.getById(id);
@@ -53,18 +50,18 @@ public class ReminderController extends BaseController
         CompletableFuture.allOf(reminder).join();
 
         model.addAttribute("item", reminder.get());
-        return "/reminders/edit";
+        return "/applications/reminders/edit";
     }
 
-    @GetMapping(value = "reminders/create")
+    @GetMapping(value = "applications/reminders/create")
     public String createView(Model model) throws ExecutionException, InterruptedException
     {
         model.addAttribute("item", new Reminder());
 
-        return "/reminders/edit";
+        return "/applications/reminders/edit";
     }
 
-    @PostMapping(value = "reminders/update")
+    @PostMapping(value = "applications/reminders/update")
     public String create(Model model,
                          @ModelAttribute("reminder") Reminder reminder,
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
@@ -86,17 +83,17 @@ public class ReminderController extends BaseController
 
         toast(format("Successfully %s reminder", isNew ? "created" : "updated"), redirect);
 
-        return format("redirect:/reminders/%s", reminder.getId());
+        return format("redirect:/applications/reminders/%s", reminder.getId());
     }
 
-    @GetMapping(value = "reminders/{id}/delete")
+    @GetMapping(value = "applications/reminders/{id}/delete")
     public String delete(@PathVariable("id") long id,
-                         RedirectAttributes redirect) throws ExecutionException, InterruptedException
+                         RedirectAttributes redirect)
     {
         reminderService.delete(id);
 
         toast("Successfully deleted reminder", redirect);
 
-        return "redirect:/reminders";
+        return "redirect:/applications/reminders";
     }
 }

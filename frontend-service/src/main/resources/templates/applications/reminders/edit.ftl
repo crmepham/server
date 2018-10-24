@@ -1,6 +1,6 @@
-<#include '../shared/header.ftl' />
+<#include '../../shared/header.ftl' />
 
-<@pageHeader title='Reminders' uri='/reminders' action="Create" actionUri="/reminders/create"/>
+<@pageHeader title='Reminders' uri='/applications/reminders' action="Create" actionUri="/applications/reminders/create"/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -8,7 +8,7 @@
             <div class="card margin-bottom">
                 <div class="card-header">Detail</div>
                 <div class="card-body">
-                    <form name="reminder" action="/reminders/update" method="post">
+                    <form name="reminder" action="/applications/reminders/update" method="post">
 
                         <#if item.id??>
                             <input type="hidden" name="id" value="${item.id}"/>
@@ -54,11 +54,11 @@
                         </div>
 
                         <button class="btn btn-primary btn-sm float-right"><#if item.id??>Update<#else>Create</#if></button>
-                        <a href="/reminders">
+                        <a href="/applications/reminders">
                             <button type="button" class="btn btn-warning btn-sm float-right">Cancel</button>
                         </a>
                         <#if item.id??>
-                            <a href="/reminders/${item.id}/delete">
+                            <a href="/applications/reminders/${item.id}/delete">
                                 <button type="button" class="btn btn-danger btn-sm float-right">Delete</button>
                             </a>
                         </#if>
@@ -69,4 +69,4 @@
     </div>
 </div>
 
-<#include '../shared/footer.ftl' />
+<#include '../../shared/footer.ftl' />

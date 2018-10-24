@@ -1,4 +1,4 @@
-<#include '../shared/header.ftl' />
+<#include '../../shared/header.ftl' />
 
 <@pageHeader title='Passwords' uri='/passwords' action="Create" actionUri="/secrets/create"/>
 
@@ -8,7 +8,7 @@
             <div class="card margin-bottom">
                 <div class="card-header">Detail</div>
                 <div class="card-body">
-                    <form name="secret" action="/secrets/update" method="post">
+                    <form name="secret" action="/applications/secrets/update" method="post">
 
                         <#if item.id??>
                             <input type="hidden" name="id" value="${item.id}"/>
@@ -37,11 +37,11 @@
                         </div>
 
                         <button class="btn btn-primary btn-sm float-right"><#if item.id??>Update<#else>Create</#if></button>
-                        <a href="/passwords">
+                        <a href="/applications/passwords">
                             <button type="button" class="btn btn-warning btn-sm float-right">Cancel</button>
                         </a>
                         <#if item.id??>
-                            <a href="/secrets/${item.id}/delete">
+                            <a href="/applications/secrets/${item.id}/delete">
                                 <button type="button" class="btn btn-danger btn-sm float-right">Delete</button>
                             </a>
                         </#if>
@@ -59,7 +59,7 @@
                                     <input class="form-control no-padding" type="text" value="${p.value}" disabled>
                                 </div>
                                 <div class="col-1">
-                                    <a href="/secrets/${p.secretId}/property/${p.id}/delete"><button class="btn btn-danger btn-sm float-right">Delete</button></a>
+                                    <a href="/applications/secrets/${p.secretId}/property/${p.id}/delete"><button class="btn btn-danger btn-sm float-right">Delete</button></a>
                                 </div>
                             </div>
                         </#list>
@@ -71,7 +71,7 @@
                 <div class="card margin-bottom">
                     <div class="card-header">Add New Property</div>
                     <div class="card-body">
-                        <form name="secretProperty" action="/secrets/${item.id}/property/create" method="post">
+                        <form name="secretProperty" action="/applications/secrets/${item.id}/property/create" method="post">
                             <div class="form-group row">
                                 <div class="col-2"><label class="col-form-label right">Name</label></div>
                                 <div class="col-10">
@@ -98,4 +98,4 @@
     </div>
 </div>
 
-<#include '../shared/footer.ftl' />
+<#include '../../shared/footer.ftl' />

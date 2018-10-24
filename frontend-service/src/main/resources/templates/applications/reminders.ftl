@@ -1,6 +1,6 @@
-<#include 'shared/header.ftl' />
+<#include '../shared/header.ftl' />
 
-<@pageHeader title='Reminders' uri='/reminders' action="Create" actionUri="/reminders/create"/>
+<@pageHeader title='Reminders' uri='/applications/reminders' action="Create" actionUri="/applications/reminders/create"/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -19,7 +19,7 @@
                             <tbody>
                             <#list reminders as r>
                                 <tr>
-                                    <td><p><a href="/reminders/${r.id}">${r.instruction}</a></p></td>
+                                    <td><p><a href="/applications/reminders/${r.id}">${r.instruction}</a></p></td>
                                     <td><p>${r.day}/${r.month}</p></td>
                                 </tr>
                             </#list>
@@ -35,4 +35,4 @@
 </div>
 
 
-<#include 'shared/footer.ftl' />
+<#include '../shared/footer.ftl' />

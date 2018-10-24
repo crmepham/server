@@ -1,6 +1,6 @@
-<#include 'shared/header.ftl' />
+<#include '../shared/header.ftl' />
 
-<@pageHeader title='Passwords' uri='/passwords' action="Create" actionUri="/secrets/create"/>
+<@pageHeader title='Passwords' uri='/applications/passwords' action="Create" actionUri="/applications/secrets/create"/>
 
 <div class="container h-100">
     <div class="row h-100">
@@ -18,7 +18,7 @@
                             <tbody>
                             <#list secrets as s>
                                 <tr>
-                                    <td><p><a href="/secrets/${s.id}">${s.context!''}</a></p></td>
+                                    <td><p><a href="/applications/secrets/${s.id}">${s.context!''}</a></p></td>
                                 </tr>
                             </#list>
                             </tbody>
@@ -33,4 +33,4 @@
 </div>
 
 
-<#include 'shared/footer.ftl' />
+<#include '../shared/footer.ftl' />

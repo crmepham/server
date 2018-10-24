@@ -30,7 +30,7 @@
                             </tbody>
                         </table>
                     <#else>
-                        <table><tr><td>There are currently no fragments defined.</td></tr></table>
+                        <table><tr><td>There are currently no errors defined.</td></tr></table>
                     </#if>
                 </div>
             </div>

@@ -41,7 +41,7 @@
 
                         <@commonMeta item=item/>
 
-                        <a href="/configuration/errors"><button type="button" id="button-cancel" class="btn btn-warning btn-sm float-right">Back</button></a>
+                        <a href="/reporting/errors"><button type="button" id="button-cancel" class="btn btn-warning btn-sm float-right">Back</button></a>
                     <#else>
 					<div class="alert alert-warning">There is no error information to display</div>
                     </#if>

@@ -21,7 +21,7 @@
                             <tbody>
                             <#list errors as e>
                                 <tr>
-                                    <td><p><a href="/configuration/errors/${e.id}">${e.entityReference!''}</a></p></td>
+                                    <td><p><a href="/reporting/errors/${e.id}">${e.entityReference!''}</a></p></td>
                                     <td><p>${e.entity}</p></td>
                                     <td><p>${e.exception}</p></td>
                                     <td><p>${e.created?string('dd/MM/yyyy HH:mm:ss')}</p></td>

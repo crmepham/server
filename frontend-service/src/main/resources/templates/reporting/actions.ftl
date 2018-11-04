@@ -14,8 +14,8 @@
                                 <tr>
                                     <th width="20%">Class Name</th>
                                     <th width="20%">Reference</th>
-                                    <th width="50%">Message</th>
-                                    <th width="10%">State</th>
+                                    <th width="45%">Message</th>
+                                    <th width="15%">State</th>
                                 </tr>
                             </thead>
                             <tbody>

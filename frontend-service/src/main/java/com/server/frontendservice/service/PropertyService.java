@@ -28,4 +28,8 @@ public class PropertyService extends BaseService
     public void update(Property property) {
         propertyRepository.update(property);
     }
+
+    public void deleteAll(long id) {
+        propertyRepository.deleteAll(id);
+    }
 }

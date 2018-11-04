@@ -13,15 +13,19 @@ logging:
 
 spring:
     jpa:
-        database: MYSQL
-        hibernate:
+      database: MYSQL
+      hibernate:
             ddl-auto: validate
 
     datasource:
-        url: jdbc:mysql://localhost:3306/server2
-        username: server2
-        password: server2
-        driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/server2
+      username: server2
+      password: server2
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    servlet:
+      multipart:
+        max-file-size: 2000Mb
+        max-request-size: 2000Mb
 
 base:
     api:

@@ -1,11 +1,14 @@
 package com.server.common.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="action")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Action extends BaseEntity
 {
     public static final String STATE_STARTED = "started";

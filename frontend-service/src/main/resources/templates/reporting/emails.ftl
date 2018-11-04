@@ -12,8 +12,8 @@
                         <table class="data-table" class="display">
                             <thead>
                                 <tr>
-                                    <th width="20%">To</th>
-                                    <th width="50%">Subject</th>
+                                    <th width="30%">To</th>
+                                    <th width="40%">Subject</th>
                                     <th width="20%">State</th>
                                     <th width="10%">Sent</th>
                                 </tr>

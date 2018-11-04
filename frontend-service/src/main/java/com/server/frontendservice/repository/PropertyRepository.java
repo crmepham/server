@@ -4,6 +4,7 @@ import com.server.common.model.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +18,7 @@ import static org.springframework.http.HttpMethod.POST;
 public class PropertyRepository extends BaseRepository
 {
     private static final String GET_ALL = "properties/get-all";
+    private static final String DELETE_ALL = "properties/delete-all";
     private static final String GET_BY_REFERENCE = "properties/get-by-reference/";
     private static final String CREATE = "properties/update";
 
@@ -41,5 +43,10 @@ public class PropertyRepository extends BaseRepository
     public void update(Property property) {
 
         template.exchange(baseUri + CREATE, POST, postJson(property), Property.class);
+    }
+
+    public void deleteAll(long id) {
+
+        template.exchange(baseUri + DELETE_ALL, POST, new HttpEntity<>(id, getHttpHeaders(null)), Property.class);
     }
 }

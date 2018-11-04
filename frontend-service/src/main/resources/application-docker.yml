@@ -22,3 +22,7 @@ spring:
         username: server2
         password: server2
         driver-class-name: com.mysql.cj.jdbc.Driver
+    servlet:
+        multipart:
+            max-file-size: 2000Mb
+            max-request-size: 2000Mb

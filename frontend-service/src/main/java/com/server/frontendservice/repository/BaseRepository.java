@@ -22,7 +22,7 @@ public class BaseRepository
         return new HttpEntity<>(new Gson().toJson(instance), headers);
     }
 
-    private HttpHeaders getHttpHeaders(HttpHeaders headers) {
+    protected HttpHeaders getHttpHeaders(HttpHeaders headers) {
 
         if (headers == null) {
             headers = new HttpHeaders();

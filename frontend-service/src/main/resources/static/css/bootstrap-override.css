@@ -55,3 +55,6 @@ input[type='text'], input[type='password'], input[type='search'] {
 .dropdown-menu {
     border-radius: 2px;
 }
+.alert {
+    border-radius: 0;
+}

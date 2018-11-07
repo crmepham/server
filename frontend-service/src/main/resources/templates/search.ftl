@@ -23,7 +23,7 @@
                                 <tbody>
                                 <#list secrets as s>
                                     <tr>
-                                        <td><a href="/secrets/${s.id}">${s.context}</a></td>
+                                        <td><a href="/applications/secrets/${s.id}">${s.context}</a></td>
                                         <td>${s.description!''}</td>
                                         <td>${s.type!''}</td>
                                     </tr>
@@ -48,9 +48,78 @@
                                 <tbody>
                                 <#list reminders as r>
                                 <tr>
-                                    <td><a href="/reminders/${r.id}">${r.instruction}</a></td>
-                                    <td>${r.context!''}</td>
+                                    <td><a href="/applications/reminders/${r.id}">${r.instruction}</a></td>
+                                    <td><p>${r.context!''}</p></td>
                                     <td><p>${r.day}/${r.month}</p></td>
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </#if>
+
+                        <br>
+
+                        <#assign todos = results['Todos']/>
+                        <#if todos?size gt 0>
+                            <h3>Todos (${todos?size})</h3>
+                            <table class="table normal-table">
+                                <thead>
+                                <tr>
+                                    <th width="60%">Instruction</th>
+                                    <th width="40%">Context</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#list todos as t>
+                                <tr>
+                                    <td><a href="/applications/todos/${t.id}">${t.instruction}</a></td>
+                                    <td>${t.context!''}</td>
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </#if>
+
+                        <br>
+
+                        <#assign files = results['Files']/>
+                        <#if files?size gt 0>
+                            <h3>Files (${files?size})</h3>
+                            <table class="table normal-table">
+                                <thead>
+                                <tr>
+                                    <th width="80%">Title</th>
+                                    <th width="20%">Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#list files as f>
+                                <tr>
+                                    <td><a href="/applications/files/${f.id}">${f.title}</a></td>
+                                    <td>${f.type}</td>
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </#if>
+
+                        <br>
+
+                        <#assign fileProperties = results['File Properties']/>
+                        <#if fileProperties?size gt 0>
+                            <h3>File Properties (${fileProperties?size})</h3>
+                            <table class="table normal-table">
+                                <thead>
+                                <tr>
+                                    <th width="40%">Name</th>
+                                    <th width="60%">Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#list fileProperties as fp>
+                                <tr>
+                                    <td><a href="/applications/files/${fp.fileId}">${fp.name}</a></td>
+                                    <td>${fp.value}</td>
                                 </tr>
                                 </#list>
                                 </tbody>

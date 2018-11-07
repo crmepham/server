@@ -5,6 +5,7 @@ import com.server.common.model.File;
 import com.server.common.model.FileProperty;
 import com.server.common.model.InputResult;
 import com.server.frontendservice.repository.FileRepository;
+import com.sun.java.swing.action.FileMenu;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,7 +110,7 @@ public class FileService extends BaseService
             final String absolutePath = path + separator + multipartFile.getOriginalFilename();
             java.io.File file = new java.io.File(absolutePath);
             multipartFile.transferTo(file);
-            fileMeta.setProperties(createProperties(fileMeta.getType(), format("%.2f", getLength(file)), fileMeta.getId(), Paths.get(absolutePath)));
+            fileMeta.setProperties(createProperties(format("%.2f", getLength(file)), fileMeta.getId(), Paths.get(absolutePath)));
             fileMeta.setAbsolutePath(file.getAbsolutePath());
             fileMeta.setLastUpdated(new Date());
             update(fileMeta);
@@ -147,6 +148,15 @@ public class FileService extends BaseService
     }
 
     private boolean store(final MultipartFile file, final String pathSuffix) throws IOException {
+
+        final String reference = "undefined-" + file.getOriginalFilename();
+
+        final File existing = fileRepository.getByExternalReference(reference);
+        if (existing != null)
+        {
+            return false;
+        }
+
         StringBuilder builder = new StringBuilder();
         final String type = deriveFileType(file);
         builder.append(derivePath(type));
@@ -172,10 +182,6 @@ public class FileService extends BaseService
             return false;
         }
 
-        // Unix epoch
-        final long timestamp = System.currentTimeMillis() / 1000L;
-        final String reference = "undefined-" + timestamp + "-" + file.getOriginalFilename();
-
         File fileMeta = new File(reference, reference, type);
         fileMeta.setAbsolutePath(absolutePath);
 
@@ -187,14 +193,14 @@ public class FileService extends BaseService
 
         fileMeta = fileRepository.getByExternalReference(reference);
 
-        fileMeta.setProperties(createProperties(type, format("%.2f", getLength(newFile)), fileMeta.getId(), Paths.get(absolutePath)));
+        fileMeta.setProperties(createProperties(format("%.2f", getLength(newFile)), fileMeta.getId(), Paths.get(absolutePath)));
         fileRepository.create(fileMeta);
 
         return true;
     }
 
-    private List<FileProperty> createProperties(final String type, final String formattedLength, final long fileId, final Path path) throws IOException {
-        final FileProperty extension = new FileProperty("extension", "Extension", type, fileId);
+    private List<FileProperty> createProperties(final String formattedLength, final long fileId, final Path path) throws IOException {
+        final FileProperty extension = new FileProperty("extension", "Extension", FilenameUtils.getExtension(path.getFileName().toString()), fileId);
         final FileProperty size = new FileProperty("size", "Size", formattedLength, fileId);
 
         BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);

@@ -19,7 +19,7 @@
                             <tbody>
                             <#list files as f>
                                 <tr>
-                                    <td><p><a href="/applications/files/${f.id}">${f.title!f.externalReference}</a></p></td>
+                                    <td><p><a href="/applications/files/${f.id?c}">${f.title!f.externalReference}</a></p></td>
                                     <td><p>${f.type}</p></td>
                                 </tr>
                             </#list>

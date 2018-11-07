@@ -64,10 +64,11 @@ public class SearchRepository {
     private List<Object> searchTable(final String property, String text) {
 
         final String[] options = property.split(":");
-        final String entity = options[0].split("=")[1];
+        final String entity = options[0].split("=")[1].split(",")[0];
+        final String table = options[0].split("=")[1].split(",")[1];
         final String[] queryColumns = options[1].split(",");
         final String[] searchWords = text.split(" ");
-        final String sql = buildQuery(entity, queryColumns, searchWords);
+        final String sql = buildQuery(table, queryColumns, searchWords);
 
         log.debug("Prepared SQL: ", sql);
         System.out.println("Prepared SQL: "  + sql);

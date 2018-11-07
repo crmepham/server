@@ -10,6 +10,52 @@
     </div>
     </#if>
 
+    <#if item.id??>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card margin-bottom">
+                    <div class="card-header">File</div>
+                    <div class="card-body" style="overflow: no-display;padding-right: 20px;">
+
+                        <#if item.absolutePath?? && fileExists>
+
+                            <div class="alert alert-success" role="alert">
+                                Referenced file does exist in the file system at location <em>${item.absolutePath}</em>.
+                            </div>
+
+
+                            <#if item.type == "Image">
+                                <img src="/file/${item.externalReference}" title="${item.title!item.externalReference}" />
+                            </#if>
+
+                        </#if>
+
+                        <#if !(item.absolutePath??)>
+                        <form name="file" action="/applications/files/${item.id?c}/upload" method="post" enctype="multipart/form-data">
+
+                            <div class="form-group row">
+                                <div class="col-12"><input type="file" name="file" /></div>
+                            </div>
+
+                            <button class="btn btn-primary btn-sm float-right">Upload</button>
+                        </form>
+                        </#if>
+
+                        <br><br>
+                        <#if item.absolutePath?? && fileExists>
+                            <a href="/applications/files/download/${item.externalReference}">
+                                <button type="button" class="btn btn-primary btn-sm float-right">Download</button>
+                            </a>
+                            <a href="/applications/files/${item.id?c}/delete/file">
+                                <button type="button" class="btn btn-danger btn-sm float-right">Delete</button>
+                            </a>
+                        </#if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </#if>
+
     <div class="row ">
         <div class="col-md-12">
             <div class="card margin-bottom">
@@ -18,7 +64,7 @@
                     <form name="file" action="/applications/files/update" method="post">
 
                         <#if item.id??>
-                            <input type="hidden" name="id" value="${item.id}"/>
+                            <input type="hidden" name="id" value="${item.id?c}"/>
                         </#if>
 
                         <div class="form-group row">
@@ -80,7 +126,7 @@
                             <button type="button" class="btn btn-warning btn-sm float-right">Cancel</button>
                         </a>
                         <#if item.id??>
-                            <a href="/applications/files/${item.id}/delete">
+                            <a href="/applications/files/${item.id?c}/delete">
                                 <button type="button" class="btn btn-danger btn-sm float-right">Delete</button>
                             </a>
                         </#if>
@@ -102,52 +148,6 @@
                                 <div class="col-10"><input class="form-control no-padding" type="text" value="${p.value}<#if p.name == 'size'>MB</#if>" readonly></div>
                             </div>
                         </#list>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </#if>
-
-    <#if item.id??>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card margin-bottom">
-                    <div class="card-header">File</div>
-                    <div class="card-body" style="overflow: no-display;padding-right: 20px;">
-
-                        <#if item.absolutePath?? && fileExists>
-
-                            <div class="alert alert-success" role="alert">
-                                Referenced file does exist in the file system at location <em>${item.absolutePath}</em>.
-                            </div>
-
-
-                            <#if item.type == "Image">
-                                <img src="/file/${item.externalReference}" title="${item.title!item.externalReference}" />
-                            </#if>
-
-                        </#if>
-
-                        <#if !(item.absolutePath??)>
-                        <form name="file" action="/applications/files/${item.id}/upload" method="post" enctype="multipart/form-data">
-
-                            <div class="form-group row">
-                                <div class="col-12"><input type="file" name="file" /></div>
-                            </div>
-
-                            <button class="btn btn-primary btn-sm float-right">Upload</button>
-                        </form>
-                        </#if>
-
-                        <br><br>
-                        <#if item.absolutePath?? && fileExists>
-                            <a href="/applications/files/download/${item.externalReference}">
-                                <button type="button" class="btn btn-primary btn-sm float-right">Download</button>
-                            </a>
-                            <a href="/applications/files/${item.id}/delete/file">
-                                <button type="button" class="btn btn-danger btn-sm float-right">Delete</button>
-                            </a>
-                        </#if>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "to_do")
+@Table(name = "todo")
 public class Todo extends BaseEntity {
 
     @Column(name = "instruction")

@@ -148,7 +148,7 @@ public class FileService extends BaseService
 
     private boolean store(final MultipartFile file, final String pathSuffix) throws IOException {
 
-        final String reference = "undefined-" + file.getOriginalFilename();
+        final String reference = file.getOriginalFilename();
 
         final File existing = fileRepository.getByExternalReference(reference);
         if (existing != null)

@@ -1,7 +1,8 @@
 package com.server.frontendservice.controller;
 
 import com.server.common.model.Property;
-import com.server.frontendservice.service.PropertyService;
+import com.server.common.service.PropertyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

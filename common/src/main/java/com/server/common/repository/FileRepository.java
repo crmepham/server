@@ -1,16 +1,16 @@
-package com.server.frontendservice.repository;
+package com.server.common.repository;
 
 import com.server.common.model.File;
-import com.server.common.model.Todo;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;

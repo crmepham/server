@@ -34,12 +34,6 @@
                             <div class="col-10"><input name="cronExpression" class="form-control no-padding" type="text" placeholder="Uri" value="${item.cronExpression!''}" required></div>
                         </div>
 
-                        <#--<div class="form-group row">
-							<#assign checked = item.enabled?string('checked', '')/>
-                            <div class="col-2"><label class="col-form-label right">Enabled</label></div>
-                            <div class="col-10"><input name="enabled" type="checkbox" ${checked}></div>
-                        </div>-->
-
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right"></label></div>
                             <div class="col-10">* denotes required fields.</div>
@@ -63,7 +57,7 @@
                         <tr>
                             <th width="50%">Title</th>
                             <th width="25%">Implementation</th>
-                            <th width="25%">Enabled</th>
+                            <th width="25%" class="text-right">Enabled</th>
                         </tr>
                         </thead>
                         <tbody>

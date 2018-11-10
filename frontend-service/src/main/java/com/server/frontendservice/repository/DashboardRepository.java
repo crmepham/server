@@ -1,6 +1,8 @@
 package com.server.frontendservice.repository;
 
 import com.server.common.model.Dashboard;
+import com.server.common.repository.BaseRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

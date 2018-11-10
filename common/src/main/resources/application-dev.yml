@@ -21,3 +21,6 @@ spring:
         username: server2
         password: server2
         driver-class-name: com.mysql.cj.jdbc.Driver
+base:
+    api:
+        uri: http://localhost:9030/

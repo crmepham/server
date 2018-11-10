@@ -37,8 +37,10 @@
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
+        <spring-retry.version>1.2.2.RELEASE</spring-retry.version>
         <swagger.version>2.9.2</swagger.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <apache-httpclient.version>4.5.2</apache-httpclient.version>
         <mysql.version>8.0.12</mysql.version>
         <flyway.version>5.1.4</flyway.version>
         <junit.version>4.12</junit.version>

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FileService
+public class FileRepositoryService
 {
     @Autowired
     private FileRepository fileRepository;

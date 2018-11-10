@@ -6,7 +6,7 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class BeanConfig
+public class FrontendBeanConfig
 {
     @Bean
     public RestTemplate restTemplate() {

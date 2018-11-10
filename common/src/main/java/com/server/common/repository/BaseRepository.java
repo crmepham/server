@@ -1,11 +1,12 @@
-package com.server.frontendservice.repository;
+package com.server.common.repository;
 
 import com.google.gson.Gson;
+
+import java.util.Base64;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-
-import java.util.Base64;
 
 public class BaseRepository
 {

@@ -3,6 +3,7 @@ package com.server.frontendservice.service;
 import com.server.common.exception.InvalidInputException;
 import com.server.common.exception.InvalidStateException;
 import com.server.common.model.Fragment;
+import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.FragmentRepository;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;

@@ -43,3 +43,7 @@ email:
   from: crmepham@hotmail.co.uk
   retry:
     threshold: 3
+
+base:
+    api:
+        uri: http://localhost:9030/

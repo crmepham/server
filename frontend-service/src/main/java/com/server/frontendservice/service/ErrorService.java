@@ -1,7 +1,9 @@
 package com.server.frontendservice.service;
 
 import com.server.common.model.ApplicationError;
-import com.server.frontendservice.repository.ErrorRepository;
+import com.server.common.repository.ErrorRepository;
+import com.server.common.service.BaseService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

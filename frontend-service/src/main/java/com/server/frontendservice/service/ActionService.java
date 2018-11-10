@@ -2,6 +2,7 @@ package com.server.frontendservice.service;
 
 import com.server.common.model.Action;
 import com.server.common.model.Email;
+import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.ActionRepository;
 import com.server.frontendservice.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,8 @@
 package com.server.dataservice.controller;
 
 import com.google.gson.Gson;
-import com.server.common.model.Dashboard;
 import com.server.common.model.Property;
-import com.server.dataservice.service.DashboardService;
-import com.server.dataservice.service.PropertyService;
+import com.server.dataservice.service.PropertyRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,7 @@ import java.util.List;
 public class PropertyController
 {
     @Autowired
-    private PropertyService propertyService;
+    private PropertyRepositoryService propertyService;
 
     @GetMapping("/get-all")
     public ResponseEntity<List<Property>> getAll() {

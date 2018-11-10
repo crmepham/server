@@ -2,6 +2,7 @@ package com.server.frontendservice.service;
 
 import com.server.common.model.Reminder;
 import com.server.common.model.Secret;
+import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.ReminderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

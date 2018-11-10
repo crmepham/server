@@ -1,5 +1,6 @@
 package com.server.frontendservice.service;
 
+import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

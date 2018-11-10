@@ -1,10 +1,13 @@
-package com.server.frontendservice.service;
+package com.server.common.service;
 
 import com.server.common.model.ApplicationError;
 import com.server.common.model.BaseEntity;
-import com.server.frontendservice.repository.ErrorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.server.common.repository.ErrorRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class BaseService
 {
     @Autowired

@@ -3,6 +3,7 @@ package com.server.frontendservice.service;
 import com.server.common.model.Action;
 import com.server.common.model.Job;
 import com.server.common.model.Schedule;
+import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

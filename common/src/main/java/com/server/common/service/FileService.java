@@ -1,15 +1,9 @@
-package com.server.frontendservice.service;
+package com.server.common.service;
 
-import com.server.common.enums.FileType;
 import com.server.common.model.File;
 import com.server.common.model.FileProperty;
 import com.server.common.model.InputResult;
-import com.server.frontendservice.repository.FileRepository;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+import com.server.common.repository.FileRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +12,6 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,6 +19,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import static com.server.common.utils.FileUtils.BASE_FILE_PATH;
+import static com.server.common.utils.FileUtils.FILE_STORAGE_PATHS;
+import static com.server.common.utils.FileUtils.deriveFileType;
 import static java.io.File.separator;
 import static java.lang.String.format;
 import static org.springframework.util.StringUtils.hasText;
@@ -34,40 +36,6 @@ import static org.springframework.util.StringUtils.hasText;
 @Service
 public class FileService extends BaseService
 {
-    public static final String BASE_FILE_PATH = "base_file_path";
-    public static final String FILE_STORAGE_PATHS = "file_storage_paths";
-
-    public static final Map<String, FileType> EXTENTION_TYPES = new HashMap<>();
-
-    static {
-        EXTENTION_TYPES.put("png", FileType.Image);
-        EXTENTION_TYPES.put("gif", FileType.Image);
-        EXTENTION_TYPES.put("jpg", FileType.Image);
-        EXTENTION_TYPES.put("bmp", FileType.Image);
-        EXTENTION_TYPES.put("pdf", FileType.Document);
-        EXTENTION_TYPES.put("xls", FileType.Document);
-        EXTENTION_TYPES.put("doc", FileType.Document);
-        EXTENTION_TYPES.put("docx", FileType.Document);
-        EXTENTION_TYPES.put("txt", FileType.Document);
-        EXTENTION_TYPES.put("rtf", FileType.Document);
-        EXTENTION_TYPES.put("xml", FileType.Document);
-        EXTENTION_TYPES.put("csv", FileType.Document);
-        EXTENTION_TYPES.put("ods", FileType.Document);
-        EXTENTION_TYPES.put("odt", FileType.Document);
-        EXTENTION_TYPES.put("oxt", FileType.Document);
-        EXTENTION_TYPES.put("mov", FileType.Video);
-        EXTENTION_TYPES.put("avi", FileType.Video);
-        EXTENTION_TYPES.put("wmv", FileType.Video);
-        EXTENTION_TYPES.put("mp4", FileType.Video);
-        EXTENTION_TYPES.put("flv", FileType.Video);
-        EXTENTION_TYPES.put("mpg", FileType.Video);
-        EXTENTION_TYPES.put("3pg", FileType.Video);
-        EXTENTION_TYPES.put("asf", FileType.Video);
-        EXTENTION_TYPES.put("rm", FileType.Video);
-        EXTENTION_TYPES.put("swf", FileType.Video);
-    }
-
-
     @Autowired
     private FileRepository fileRepository;
 
@@ -157,7 +125,7 @@ public class FileService extends BaseService
         }
 
         StringBuilder builder = new StringBuilder();
-        final String type = deriveFileType(file);
+        final String type = deriveFileType(file.getOriginalFilename());
         builder.append(derivePath(type));
         builder.append(separator);
 
@@ -210,7 +178,7 @@ public class FileService extends BaseService
         return Arrays.asList(extension, size, created, lastModified, lastOpened);
     }
 
-    private String derivePath(final String type) {
+    public String derivePath(final String type) {
         StringBuilder builder = new StringBuilder();
         builder.append(propertyService.getByExternalReference(BASE_FILE_PATH).getValue().trim());
         builder.append(separator);
@@ -226,14 +194,6 @@ public class FileService extends BaseService
         return builder.toString();
     }
 
-    private String deriveFileType(final MultipartFile file) {
-        final String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        FileType type = EXTENTION_TYPES.get(extension);
-        if (type == null) type = FileType.Document;
-        return type.toString();
-    }
-
-
     public void delete(final File file) {
 
         if (hasText(file.getAbsolutePath())) {
@@ -247,19 +207,19 @@ public class FileService extends BaseService
         update(file);
     }
 
-    private double getLength(java.io.File file) {
+    public double getLength(java.io.File file) {
         double bytes = file.length();
         double kilobytes = (bytes / 1024);
         return kilobytes / 1024;
     }
 
-    private String sanitizeText(String input) {
+    public String sanitizeText(String input) {
         input = input.trim();
         input = input.replace(" ", "-");
         return input;
     }
 
-    private String sanitizePath(final String pathSuffix) {
+    public String sanitizePath(final String pathSuffix) {
         if (!hasText(pathSuffix)) {
             return null;
         }
@@ -277,7 +237,7 @@ public class FileService extends BaseService
         return sanitized;
     }
 
-    private void ensureDirectoryExists(final String path) {
+    public void ensureDirectoryExists(final String path) {
         java.io.File directory = new java.io.File(path);
         if (!directory.exists()) {
             directory.mkdirs();

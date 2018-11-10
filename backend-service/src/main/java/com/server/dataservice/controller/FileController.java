@@ -2,7 +2,7 @@ package com.server.dataservice.controller;
 
 import com.google.gson.Gson;
 import com.server.common.model.File;
-import com.server.dataservice.service.FileService;
+import com.server.dataservice.service.FileRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.List;
 public class FileController
 {
     @Autowired
-    private FileService fileService;
+    private FileRepositoryService fileService;
 
     @GetMapping("/get-all")
     public ResponseEntity<List<File>> getAll() {

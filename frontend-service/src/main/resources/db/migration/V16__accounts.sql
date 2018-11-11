@@ -29,5 +29,3 @@ CREATE TABLE `account` (
   `note` varchar(2000),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-CREATE INDEX idx_account_name ON `account` (name);

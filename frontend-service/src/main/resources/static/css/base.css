@@ -138,3 +138,7 @@ textarea {
     border-color: grey;
     outline: 0;
 }
+
+.modal-error, .modal-success {
+    display: none;
+}

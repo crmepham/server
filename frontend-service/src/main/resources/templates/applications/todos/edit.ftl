@@ -8,7 +8,7 @@
             <div class="card margin-bottom">
                 <div class="card-header">Detail</div>
                 <div class="card-body">
-                    <form name="reminder" action="/applications/todos/update" method="post">
+                    <form name="todo" action="/applications/todos/update" method="post">
 
                         <#if item.id??>
                             <input type="hidden" name="id" value="${item.id}"/>

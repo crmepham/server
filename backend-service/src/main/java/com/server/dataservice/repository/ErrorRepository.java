@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface ErrorRepository extends JpaRepository<ApplicationError, Long> {
 
-    List<ApplicationError> findByDeletedFalse();
+    List<ApplicationError> findByDeletedFalseOrderByCreatedDesc();
     ApplicationError findByIdAndDeletedFalse(long id);
 }

@@ -1,4 +1,4 @@
-<#macro pageHeader title uri="" action="" actionUri="">
+<#macro pageHeader title uri="" action="" actionUri="" modal=false>
     <#assign toUse = '#' />
     <#if uri?has_content>
         <#assign toUse = uri />
@@ -9,7 +9,7 @@
             <#if action?has_content>
                 <div class="float-right">
                     <a href="<#if actionUri?has_content>${actionUri}<#else>#</#if>">
-                        <button type="button" class="btn btn-primary btn-sm float-right">${action}</button>
+                        <button type="button" class="btn btn-primary btn-sm float-right header-btn" <#if modal>data-toggle="modal" data-target="#modal"</#if>>${action}</button>
                     </a>
                 </div>
             </#if>

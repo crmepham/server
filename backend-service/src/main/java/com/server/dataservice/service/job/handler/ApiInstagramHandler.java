@@ -173,8 +173,7 @@ public class ApiInstagramHandler implements JobHandler {
     }
 
     private Map<String, Object> populateContext(@NonNull Map<String, Object> item, @NonNull String userId, File file)
-    {
-        Map<String, Object> caption = (Map<String, Object>) item.get("caption");
+    { Map<String, Object> caption = (Map<String, Object>) item.get("caption");
 
         if (caption != null) {
             file.setDescription((String) caption.get("text"));

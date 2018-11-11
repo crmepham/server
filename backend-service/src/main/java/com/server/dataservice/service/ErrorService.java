@@ -14,7 +14,7 @@ public class ErrorService
     private ErrorRepository errorRepository;
 
     public List<ApplicationError> getAll() {
-        return errorRepository.findByDeletedFalse();
+        return errorRepository.findByDeletedFalseOrderByCreatedDesc();
     }
 
     public ApplicationError getById(long id) {

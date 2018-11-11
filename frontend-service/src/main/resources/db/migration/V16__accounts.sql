@@ -17,9 +17,6 @@ CREATE TABLE `account_transaction` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
-CREATE INDEX idx_account_transaction_name ON `account_transaction` (name);
-CREATE INDEX idx_account_transaction_type ON `account_transaction` (type);
-
 CREATE TABLE `account` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `created` datetime DEFAULT NULL,

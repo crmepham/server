@@ -76,6 +76,7 @@ public class RemindersOneWeekHandler implements JobHandler {
             action.setState(Action.STATE_COMPLETED);
             action.setResultMessage("No reminders occurring in 7 days.");
             actionRepository.save(action);
+            return;
         }
 
         debug(format("Found %s reminders with an action date in %s days.", reminders.size(), DAYS));
@@ -104,9 +105,7 @@ public class RemindersOneWeekHandler implements JobHandler {
 
     private String createBody(Collection<Reminder> reminders) {
         StringBuilder builder = new StringBuilder();
-        reminders.forEach(r -> {
-            builder.append(r.getInstruction() + "\n");
-        });
+        reminders.forEach(r -> builder.append(r.getInstruction() + "\n"));
         return builder.toString();
     }
 

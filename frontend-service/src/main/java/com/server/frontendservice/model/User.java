@@ -1,13 +1,15 @@
 package com.server.frontendservice.model;
 
-import com.server.common.model.BaseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.server.common.model.BaseEntity;
 
 @Entity
 @Table(name = "user")
@@ -77,7 +79,7 @@ public class User extends BaseEntity implements UserDetails {
         this.accountNonExpired = accountNonExpired;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
+    public void setAccßountNonLocked(boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
 

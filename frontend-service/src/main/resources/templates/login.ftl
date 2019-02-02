@@ -24,7 +24,11 @@
                                 <input type="password" class="form-control" name="password" placeholder="password">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <div class="form-group">
+                                <p>Remember me: <input type="checkbox" name="remember-me" /></p>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary float-right">Login</button>
                     </form>
                 </div>

@@ -6,15 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.server.frontendservice.service.UserDetailsServiceImpl;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired
-    private CustomAuthenticationProvider authProvider;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     protected void configure(HttpSecurity http) throws Exception
     {
@@ -23,16 +29,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers(new String[] {"*/shared/**", "*/configuration/**"}).permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin()
+                .and()
+                .formLogin()
                 .successHandler(customAuthenticationSuccessHandler)
                 .loginPage("/login").permitAll()
                 .failureUrl("/login?error")
-                .and().logout()
-                .logoutUrl("/logout").permitAll();
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID", "remember-me")
+                .permitAll()
+                .and()
+                .rememberMe().key("actuallySecretKindOf").tokenValiditySeconds(31536000).authenticationSuccessHandler(customAuthenticationSuccessHandler);
     }
 
     @Autowired
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(this.authProvider);
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 }

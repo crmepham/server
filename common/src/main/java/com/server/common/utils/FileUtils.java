@@ -43,7 +43,8 @@ public class FileUtils {
     }
 
     public static final String deriveFileType(final String filename) {
-        final String extension = FilenameUtils.getExtension(filename);
+        final String sub = filename.substring(0, filename.lastIndexOf("?"));
+        final String extension = FilenameUtils.getExtension(sub);
         FileType type = EXTENTION_TYPES.get(extension);
         if (type == null) type = FileType.Document;
         return type.toString();

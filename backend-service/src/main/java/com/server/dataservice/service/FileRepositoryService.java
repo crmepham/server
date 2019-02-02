@@ -14,7 +14,7 @@ public class FileRepositoryService
     private FileRepository fileRepository;
 
     public List<File> getAll() {
-        return fileRepository.findByDeletedFalse();
+        return fileRepository.findByDeletedFalseOrderByCreatedDesc();
     }
 
     public File get(Long id) {

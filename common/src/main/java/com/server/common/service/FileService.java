@@ -216,6 +216,7 @@ public class FileService extends BaseService
     public String sanitizeText(String input) {
         input = input.trim();
         input = input.replace(" ", "-");
+        input = input.substring(0, input.lastIndexOf("?"));
         return input;
     }
 

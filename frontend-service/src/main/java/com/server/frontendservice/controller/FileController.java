@@ -222,7 +222,7 @@ public class FileController extends BaseController
     }
 
     @ResponseBody
-    @GetMapping("/i/{externalReference}")
+    @GetMapping("/i/{shortReference}")
     public byte[] getFileDataShortReference(@PathVariable String shortReference) throws Exception
     {
         File file = fileService.getByShortReference(shortReference);

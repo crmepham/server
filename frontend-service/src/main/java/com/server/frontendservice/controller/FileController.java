@@ -24,10 +24,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.util.StringUtils.hasText;
 
 @Controller
@@ -101,16 +104,20 @@ public class FileController extends BaseController
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
     {
         final boolean isNew = file.getId() == null;
+        CompletableFuture<List<File>> all = fileService.getAll();
+        CompletableFuture.allOf(all).join();
+
+        if (isNew)
+        {
+            file.setShortReference(getShortReference(all.get()));
+        }
 
         fileService.update(file);
 
         if (isNew)
         {
-            CompletableFuture<List<File>> all = fileService.getAll();
-            CompletableFuture.allOf(all).join();
             Collections.reverse(all.get());
             file = all.get().iterator().next();
-
         }
 
         model.addAttribute("item", file);
@@ -119,6 +126,21 @@ public class FileController extends BaseController
         toast(format("Successfully %s file", isNew ? "created" : "updated"), redirect);
 
         return format("redirect:/applications/files/%s", file.getId());
+    }
+
+    private String getShortReference(final List<File> all)
+    {
+        final List<String> codes = all.stream()
+                                        .map(File::getShortReference)
+                                        .distinct()
+                                        .collect(toList());
+
+        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        while (codes.contains(shortReference))
+        {
+            shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        }
+        return shortReference;
     }
 
     @GetMapping(value = "applications/files/{id}/delete")
@@ -196,7 +218,6 @@ public class FileController extends BaseController
         File file = fileService.getByExternalReference(externalReference);
         java.io.File fileData = new java.io.File(file.getAbsolutePath());
         FileInputStream is = new FileInputStream(fileData);
-
         return FileUtils.readFileToByteArray(fileData);
     }
 

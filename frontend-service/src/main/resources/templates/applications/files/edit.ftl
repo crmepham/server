@@ -82,6 +82,18 @@
                             <div class="col-10"><input name="description" class="form-control no-padding" type="text" placeholder="Description" value="${item.description!''}" required></div>
                         </div>
 
+                        <#if item.id??>
+                            <div class="form-group row">
+                                <div class="col-2"><label class="col-form-label right">Short Reference</label></div>
+                                <div class="col-10"><input name="shortReference" class="form-control no-padding" type="text" placeholder="External Reference" value="${item.shortReference!''}" readonly></div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-2"><label class="col-form-label right">Short Link</label></div>
+                                <div class="col-10"><input class="form-control no-padding" type="text" value="https://crm86.uk/i/${item.shortReference!''}" readonly></div>
+                            </div>
+                        </#if>
+
                         <div class="form-group row">
                             <div class="col-2"><label class="col-form-label right">Type*</label></div>
                             <div class="col-10">

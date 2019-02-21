@@ -39,6 +39,9 @@ public class File extends BaseEntity {
     @Column(name = "extension")
     private String extension;
 
+    @Column(name = "short_reference")
+    private String shortReference;
+
     @OneToMany(mappedBy="fileId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<FileProperty> properties;
 
@@ -165,5 +168,25 @@ public class File extends BaseEntity {
     public void setAbsolutePath(String absolutePath)
     {
         this.absolutePath = absolutePath;
+    }
+
+    /**
+     * Gets the shortReference.
+     *
+     * @return shortReference
+     */
+    public String getShortReference()
+    {
+        return shortReference;
+    }
+
+    /**
+     * Sets the shortReference.
+     *
+     * @param shortReference the shortReference
+     */
+    public void setShortReference(String shortReference)
+    {
+        this.shortReference = shortReference;
     }
 }

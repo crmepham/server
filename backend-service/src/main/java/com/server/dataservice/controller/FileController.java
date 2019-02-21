@@ -37,6 +37,11 @@ public class FileController
         return new ResponseEntity<>(fileService.get(externalReference), HttpStatus.OK);
     }
 
+    @GetMapping("/get-by-short-reference/{shortReference}")
+    public ResponseEntity<File> getByShortReference(@PathVariable("shortReference") String shortReference) {
+        return new ResponseEntity<>(fileService.getByShortReference(shortReference), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/create", consumes = "application/json")
     public void create(@RequestBody String payload) {
         fileService.create(new Gson().fromJson(payload, File.class));

@@ -21,6 +21,7 @@ public class FileRepository extends BaseRepository
     private static final String GET_ALL = "files/get-all";
     private static final String GET_BY_ID = "files/get-by-id/";
     private static final String GET_BY_EXTERNAL_REFERENCE = "files/get-by-external-reference/";
+    private static final String GET_BY_SHORT_REFERENCE = "files/get-by-short-reference/";
     private static final String CREATE = "files/create";
     private static final String DELETE = "files/delete";
 
@@ -46,6 +47,12 @@ public class FileRepository extends BaseRepository
     public File getByExternalReference(final String externalReference) {
 
         ResponseEntity<File> file = template.exchange(baseUri + GET_BY_EXTERNAL_REFERENCE + externalReference, GET, getEntity(), new ParameterizedTypeReference<File>() {});
+        return file.getBody();
+    }
+
+    public File getByShortReference(final String shortReference) {
+
+        ResponseEntity<File> file = template.exchange(baseUri + GET_BY_SHORT_REFERENCE + shortReference, GET, getEntity(), new ParameterizedTypeReference<File>() {});
         return file.getBody();
     }
 

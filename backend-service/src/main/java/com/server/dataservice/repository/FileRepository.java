@@ -14,4 +14,5 @@ public interface FileRepository extends JpaRepository<File, Long> {
 
     List<File> findByDeletedFalseOrderByCreatedDesc();
     File findByExternalReference(String externalReference);
+    File findByShortReference(String shortReference);
 }

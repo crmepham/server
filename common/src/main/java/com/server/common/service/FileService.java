@@ -65,6 +65,10 @@ public class FileService extends BaseService
         return fileRepository.getByExternalReference(externalReference);
     }
 
+    public File getByShortReference(final String shortReference) {
+        return fileRepository.getByShortReference(shortReference);
+    }
+
     public boolean exists(final File file) {
         return new java.io.File(file.getAbsolutePath()).exists();
     }

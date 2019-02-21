@@ -221,6 +221,16 @@ public class FileController extends BaseController
         return FileUtils.readFileToByteArray(fileData);
     }
 
+    @ResponseBody
+    @GetMapping("/i/{externalReference}")
+    public byte[] getFileDataShortReference(@PathVariable String shortReference) throws Exception
+    {
+        File file = fileService.getByShortReference(shortReference);
+        java.io.File fileData = new java.io.File(file.getAbsolutePath());
+        FileInputStream is = new FileInputStream(fileData);
+        return FileUtils.readFileToByteArray(fileData);
+    }
+
     private List<String> getTypes()
     {
         return Arrays.asList(getPropertyService().getByExternalReference("file_types").getValue().split(","));

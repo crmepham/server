@@ -25,6 +25,10 @@ public class FileRepositoryService
         return fileRepository.findByExternalReference(externalReference);
     }
 
+    public File getByShortReference(final String shortReference) {
+        return fileRepository.findByShortReference(shortReference);
+    }
+
     public void create(File file) {
         fileRepository.save(file);
     }

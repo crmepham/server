@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         http    .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers(new String[] {"*/shared/**", "*/configuration/**", "*/file/**"}).permitAll()
+                .antMatchers(new String[] {"/shared/**", "/configuration/**", "*/i/**", "/w/**"}).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -47,12 +47,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/file/**"); // #3
     }
 }

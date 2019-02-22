@@ -5,6 +5,7 @@ import com.server.common.model.InputResult;
 import com.server.common.service.FileService;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -227,13 +228,28 @@ public class FileController extends BaseController
     {
         File file = fileService.getByShortReference(shortReference);
         java.io.File fileData = new java.io.File(file.getAbsolutePath());
-        FileInputStream is = new FileInputStream(fileData);
         return FileUtils.readFileToByteArray(fileData);
+    }
+
+    @GetMapping("/w/{shortReference}")
+    public String getFileDataShortReferenceWebView(Model model, @PathVariable String shortReference) throws Exception
+    {
+        File file = fileService.getByShortReference(shortReference);
+        java.io.File fileData = new java.io.File(file.getAbsolutePath());
+
+        byte[] encoded= Base64.encodeBase64(FileUtils.readFileToByteArray(fileData));
+        String encodedString = new String(encoded);
+
+        model.addAttribute("image", encodedString);
+        model.addAttribute("file", file);
+        final String suffix = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".") + 1);
+        model.addAttribute("suffix", suffix);
+
+        return "/applications/files/imageWebView";
     }
 
     private List<String> getTypes()
     {
         return Arrays.asList(getPropertyService().getByExternalReference("file_types").getValue().split(","));
-
     }
 }

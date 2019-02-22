@@ -92,6 +92,11 @@
                                 <div class="col-2"><label class="col-form-label right">Short Link</label></div>
                                 <div class="col-10"><input class="form-control no-padding" type="text" value="https://crm86.uk/i/${item.shortReference!''}" readonly></div>
                             </div>
+
+                            <div class="form-group row">
+                                <div class="col-2"><label class="col-form-label right">Web Link</label></div>
+                                <div class="col-10"><input class="form-control no-padding" type="text" value="https://crm86.uk/w/${item.shortReference!''}" readonly></div>
+                            </div>
                         </#if>
 
                         <div class="form-group row">

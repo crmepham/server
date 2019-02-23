@@ -1,9 +1,11 @@
 package com.server.common.service;
 
-import com.server.common.model.File;
-import com.server.common.model.FileProperty;
-import com.server.common.model.InputResult;
-import com.server.common.repository.FileRepository;
+import static com.server.common.utils.FileUtils.BASE_FILE_PATH;
+import static com.server.common.utils.FileUtils.FILE_STORAGE_PATHS;
+import static com.server.common.utils.FileUtils.deriveFileType;
+import static java.io.File.separator;
+import static java.lang.String.format;
+import static org.springframework.util.StringUtils.hasText;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -25,12 +28,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.server.common.utils.FileUtils.BASE_FILE_PATH;
-import static com.server.common.utils.FileUtils.FILE_STORAGE_PATHS;
-import static com.server.common.utils.FileUtils.deriveFileType;
-import static java.io.File.separator;
-import static java.lang.String.format;
-import static org.springframework.util.StringUtils.hasText;
+import com.server.common.model.File;
+import com.server.common.model.FileProperty;
+import com.server.common.model.InputResult;
+import com.server.common.repository.FileRepository;
 
 @Transactional
 @Service
@@ -165,6 +166,9 @@ public class FileService extends BaseService
             fileMeta.setPathSuffix(pathSuffix);
         }
 
+        fileMeta.setShortReference(getShortReference());
+
+
         fileRepository.create(fileMeta);
 
         fileMeta = fileRepository.getByExternalReference(reference);
@@ -173,6 +177,16 @@ public class FileService extends BaseService
         fileRepository.create(fileMeta);
 
         return true;
+    }
+
+    private String getShortReference()
+    {
+        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        while (getByShortReference(shortReference) != null)
+        {
+            shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        }
+        return shortReference;
     }
 
     private List<FileProperty> createProperties(final String formattedLength, final long fileId, final Path path) throws IOException {
@@ -225,7 +239,9 @@ public class FileService extends BaseService
     public String sanitizeText(String input) {
         input = input.trim();
         input = input.replace(" ", "-");
-        input = input.substring(0, input.lastIndexOf("?"));
+        if (input.lastIndexOf("?") != -1) {
+            input = input.substring(0, input.lastIndexOf("?"));
+        }
         return input;
     }
 

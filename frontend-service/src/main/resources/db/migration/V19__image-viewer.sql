@@ -1,0 +1,2 @@
+insert into menu (parent_id, external_reference, uri, title, visible, created, created_user, last_updated, last_updated_user, item_order)
+select id, 'applications/viewer', '/applications/viewer', 'Viewer', true, now(), 'system', now(), 'system', 7 from menu where external_reference = 'applications';

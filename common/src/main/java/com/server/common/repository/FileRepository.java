@@ -19,6 +19,7 @@ import static org.springframework.http.HttpMethod.POST;
 public class FileRepository extends BaseRepository
 {
     private static final String GET_ALL = "files/get-all";
+    private static final String GET_ALL_IMAGES = "files/get-all-images";
     private static final String GET_BY_ID = "files/get-by-id/";
     private static final String GET_BY_EXTERNAL_REFERENCE = "files/get-by-external-reference/";
     private static final String GET_BY_SHORT_REFERENCE = "files/get-by-short-reference/";
@@ -34,6 +35,13 @@ public class FileRepository extends BaseRepository
     public CompletableFuture<List<File>> getAll() {
 
         String url = baseUri + GET_ALL;
+        ResponseEntity<List<File>> res = template.exchange(url, GET, getEntity(), new ParameterizedTypeReference<List<File>>() {});
+        return CompletableFuture.completedFuture(res.getBody());
+    }
+
+    public CompletableFuture<List<File>> getAllImages() {
+
+        String url = baseUri + GET_ALL_IMAGES;
         ResponseEntity<List<File>> res = template.exchange(url, GET, getEntity(), new ParameterizedTypeReference<List<File>>() {});
         return CompletableFuture.completedFuture(res.getBody());
     }

@@ -17,6 +17,10 @@ public class FileRepositoryService
         return fileRepository.findByDeletedFalseOrderByCreatedDesc();
     }
 
+    public List<File> getAllImages() {
+        return fileRepository.findByTypeAndDeletedFalseOrderByCreatedDesc("Image");
+    }
+
     public File get(Long id) {
         return fileRepository.findById(id).get();
     }

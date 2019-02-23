@@ -47,6 +47,11 @@ public class FileService extends BaseService
         return fileRepository.getAll();
     }
 
+    public CompletableFuture<List<File>> getAllImages() {
+
+        return fileRepository.getAllImages();
+    }
+
     public void update(File file) {
         file.setPathSuffix(sanitizePath(file.getPathSuffix()));
         fileRepository.create(file);

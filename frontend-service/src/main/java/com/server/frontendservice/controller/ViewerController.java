@@ -1,0 +1,62 @@
+package com.server.frontendservice.controller;
+
+import static org.springframework.util.StringUtils.hasText;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.server.common.model.File;
+import com.server.common.service.FileService;
+
+@Controller
+public class ViewerController extends BaseController
+{
+    private static final String PATH = "applications/viewer";
+
+    private static final ConcurrentHashMap<String, File> CACHE = new ConcurrentHashMap<>();
+
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    private FileController fileController;
+
+    @GetMapping(PATH)
+    public void view()
+    {
+    }
+
+    @ResponseBody
+    @PostMapping(PATH + "/files")
+    public List<File> files() throws InterruptedException, ExecutionException
+    {
+        final CompletableFuture<List<File>> files = fileService.getAllImages();
+        CompletableFuture.allOf(files);
+        return files.get();
+    }
+
+    @PostMapping(PATH + "/image/{shortReference}")
+    public String files(Model model, @PathVariable String shortReference) throws IOException
+    {
+        if (hasText(shortReference))
+        {
+            final File file = fileController.getFile(shortReference);
+            if (file != null)
+            {
+                fileController.populateImageModel(model, file);
+            }
+        }
+        return "/applications/viewer/image";
+    }
+}

@@ -7,6 +7,7 @@ import com.server.common.service.FileService;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -27,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,8 @@ import static org.springframework.util.StringUtils.hasText;
 public class FileController extends BaseController
 {
     private static final String PATH = "applications/files";
+
+    private static final ConcurrentHashMap<String, File> CACHE = new ConcurrentHashMap<>();
 
     @Autowired
     private FileService fileService;
@@ -129,21 +133,6 @@ public class FileController extends BaseController
         return format("redirect:/applications/files/%s", file.getId());
     }
 
-    private String getShortReference(final List<File> all)
-    {
-        final List<String> codes = all.stream()
-                                        .map(File::getShortReference)
-                                        .distinct()
-                                        .collect(toList());
-
-        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        while (codes.contains(shortReference))
-        {
-            shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        }
-        return shortReference;
-    }
-
     @GetMapping(value = "applications/files/{id}/delete")
     public String delete(@PathVariable("id") long id,
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
@@ -226,7 +215,7 @@ public class FileController extends BaseController
     @GetMapping("/i/{shortReference}")
     public byte[] getFileDataShortReference(@PathVariable String shortReference) throws Exception
     {
-        File file = fileService.getByShortReference(shortReference);
+        File file = getFile(shortReference);
         java.io.File fileData = new java.io.File(file.getAbsolutePath());
         return FileUtils.readFileToByteArray(fileData);
     }
@@ -234,18 +223,52 @@ public class FileController extends BaseController
     @GetMapping("/w/{shortReference}")
     public String getFileDataShortReferenceWebView(Model model, @PathVariable String shortReference) throws Exception
     {
-        File file = fileService.getByShortReference(shortReference);
-        java.io.File fileData = new java.io.File(file.getAbsolutePath());
+        File file = getFile(shortReference);
+        if (file != null)
+        {
+            populateImageModel(model, file);
+        }
 
-        byte[] encoded= Base64.encodeBase64(FileUtils.readFileToByteArray(fileData));
+        return "/applications/files/imageWebView";
+    }
+
+    void populateImageModel(Model model, File file) throws IOException
+    {
+        java.io.File fileData = new java.io.File(file.getAbsolutePath() == null ? "." : file.getAbsolutePath());
+
+        byte[] encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(fileData));
         String encodedString = new String(encoded);
 
         model.addAttribute("image", encodedString);
         model.addAttribute("file", file);
         final String suffix = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".") + 1);
         model.addAttribute("suffix", suffix);
+    }
 
-        return "/applications/files/imageWebView";
+    File getFile(@NonNull final String shortReference)
+    {
+        File file = CACHE.get(shortReference);
+        if (file == null)
+        {
+            file = fileService.getByShortReference(shortReference);
+            CACHE.put(shortReference, file);
+        }
+        return file;
+    }
+
+    String getShortReference(final List<File> all)
+    {
+        final List<String> codes = all.stream()
+                .map(File::getShortReference)
+                .distinct()
+                .collect(toList());
+
+        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        while (codes.contains(shortReference))
+        {
+            shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        }
+        return shortReference;
     }
 
     private List<String> getTypes()

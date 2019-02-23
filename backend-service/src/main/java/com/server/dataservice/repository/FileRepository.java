@@ -13,6 +13,7 @@ import com.server.common.model.File;
 public interface FileRepository extends JpaRepository<File, Long> {
 
     List<File> findByDeletedFalseOrderByCreatedDesc();
+    List<File> findByTypeAndDeletedFalseOrderByCreatedDesc(String type);
     File findByExternalReference(String externalReference);
     File findByShortReference(String shortReference);
 }

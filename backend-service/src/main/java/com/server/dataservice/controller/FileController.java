@@ -27,6 +27,11 @@ public class FileController
         return new ResponseEntity<>(fileService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/get-all-images")
+    public ResponseEntity<List<File>> getAllImages() {
+        return new ResponseEntity<>(fileService.getAllImages(), HttpStatus.OK);
+    }
+
     @GetMapping("/get-by-id/{id}")
     public ResponseEntity<File> get(@PathVariable("id") Long id) {
         return new ResponseEntity<>(fileService.get(id), HttpStatus.OK);

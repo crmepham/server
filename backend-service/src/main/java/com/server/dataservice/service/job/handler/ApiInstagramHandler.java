@@ -6,7 +6,6 @@ import static com.server.common.utils.FileUtils.deriveFileType;
 import static java.io.File.separator;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
-import static java.util.stream.Collectors.toList;
 import static org.apache.commons.io.FilenameUtils.getExtension;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.util.StringUtils.hasText;
@@ -23,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
@@ -104,20 +102,16 @@ public class ApiInstagramHandler implements JobHandler {
                     return;
                 }
 
-                final CompletableFuture<List<File>> files = fileService.getAll();
-
-                CompletableFuture.allOf(files);
-
                 for (final Map<String, Object> item : data) {
                     final String type = (String) item.get("type");
 
                     if ("carousel".equalsIgnoreCase(type)) {
 
-                        total += parseAndPersistCarouselFiles(item, userId, files.get());
+                        total += parseAndPersistCarouselFiles(item, userId);
 
                     } else {
 
-                        total += parseAndPersistSingleFile(item, userId, files.get());
+                        total += parseAndPersistSingleFile(item, userId);
                     }
                 }
 
@@ -139,8 +133,7 @@ public class ApiInstagramHandler implements JobHandler {
     }
 
     private int parseAndPersistCarouselFiles(@NonNull final Map<String, Object> item,
-                                             @NonNull final String userId,
-                                             @NonNull final List<File> files) throws Exception {
+                                             @NonNull final String userId) throws Exception {
 
         final List<Map<String, Object>> carouselMedia = (List<Map<String, Object>>) item.get("carousel_media");
         int count = 0;
@@ -158,7 +151,7 @@ public class ApiInstagramHandler implements JobHandler {
             final Map<String, Object> media = carouselMedia.get(i);
 
             final File file = createFile(id);
-            file.setShortReference(getShortReference(files));
+            file.setShortReference(getShortReference());
             final Map<String, Object> context = populateContext(item, userId, file);
             parseAndPersist(id, media, file, context);
             count++;
@@ -168,8 +161,7 @@ public class ApiInstagramHandler implements JobHandler {
     }
 
     private int parseAndPersistSingleFile(@NonNull final Map<String, Object> item,
-                                          @NonNull final String userId,
-                                          @NonNull final List<File> files)  throws Exception {
+                                          @NonNull final String userId)  throws Exception {
 
         final String id = (String) item.get("id");
         File existing = fileRepository.getByExternalReference(id);
@@ -179,7 +171,7 @@ public class ApiInstagramHandler implements JobHandler {
         }
 
         final File file = createFile(id);
-        file.setShortReference(getShortReference(files));
+        file.setShortReference(getShortReference());
         final Map<String, Object> context = populateContext(item, userId, file);
         parseAndPersist(id, item, file, context);
         return 1;
@@ -305,15 +297,10 @@ public class ApiInstagramHandler implements JobHandler {
         return file;
     }
 
-    private String getShortReference(final List<File> all)
+    private String getShortReference()
     {
-        final List<String> codes = all.stream()
-                .map(File::getShortReference)
-                .distinct()
-                .collect(toList());
-
         String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        while (codes.contains(shortReference))
+        while (fileService.getByShortReference(shortReference) != null)
         {
             shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
         }

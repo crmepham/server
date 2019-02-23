@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         http    .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers(new String[] {"/shared/**", "/configuration/**", "*/i/**", "/w/**"}).permitAll()
+                .antMatchers(new String[] {"/shared/**", "/configuration/**", "/i/**", "/w/**"}).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -1,0 +1,2 @@
+insert into property (external_reference, value, description, created, created_user, last_updated, last_updated_user)
+values ('hide_sensitive_data', 'true', 'Hides sensitive data on the UI. Useful when demoing.', now(), 'system', now(), 'system');

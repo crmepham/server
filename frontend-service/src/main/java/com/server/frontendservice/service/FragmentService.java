@@ -4,6 +4,7 @@ import com.server.common.exception.InvalidInputException;
 import com.server.common.exception.InvalidStateException;
 import com.server.common.model.Fragment;
 import com.server.common.service.BaseService;
+import com.server.common.service.PropertyService;
 import com.server.frontendservice.repository.FragmentRepository;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import static java.lang.Boolean.parseBoolean;
 import static java.lang.String.format;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -40,6 +42,9 @@ public class FragmentService extends BaseService
 {
     @Autowired
     private FragmentRepository fragmentRepository;
+
+    @Autowired
+    private PropertyService propertyService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -140,6 +145,7 @@ public class FragmentService extends BaseService
     private Map<String, Object> getModel(Fragment fragment) {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("fragment", fragment);
+        map.put("hideSensitiveData", parseBoolean(propertyService.getByExternalReference("hide_sensitive_data").getValue()));
         return map;
     }
 

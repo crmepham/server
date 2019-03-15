@@ -201,6 +201,8 @@ public class ApiInstagramHandler implements JobHandler {
         final Map<String, Object> standardResolution = (Map<String, Object>) images.get("standard_resolution");
         final String remotePath = (String) standardResolution.get("url");
         final String pathSuffix = "instagram/" + context.get("userId");
+        final Map<String, Object> caption = (Map<String, Object>) item.get("caption");
+        final String description = (String) caption.get("text");
 
         final String type = deriveFileType(remotePath);
         file.setPathSuffix(pathSuffix);
@@ -240,6 +242,7 @@ public class ApiInstagramHandler implements JobHandler {
         File fileMeta = new File(id, id, type);
         fileMeta.setAbsolutePath(absolutePath);
         fileMeta.setShortReference(getShortReference());
+        fileMeta.setDescription(description);
 
         if (hasText(pathSuffix)) {
             fileMeta.setPathSuffix(pathSuffix);

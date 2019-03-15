@@ -151,7 +151,6 @@ public class ApiInstagramHandler implements JobHandler {
             final Map<String, Object> media = carouselMedia.get(i);
 
             final File file = createFile(id);
-            file.setShortReference(getShortReference());
             final Map<String, Object> context = populateContext(item, userId, file);
             parseAndPersist(id, media, file, context);
             count++;
@@ -171,7 +170,6 @@ public class ApiInstagramHandler implements JobHandler {
         }
 
         final File file = createFile(id);
-        file.setShortReference(getShortReference());
         final Map<String, Object> context = populateContext(item, userId, file);
         parseAndPersist(id, item, file, context);
         return 1;
@@ -241,6 +239,7 @@ public class ApiInstagramHandler implements JobHandler {
 
         File fileMeta = new File(id, id, type);
         fileMeta.setAbsolutePath(absolutePath);
+        fileMeta.setShortReference(getShortReference());
 
         if (hasText(pathSuffix)) {
             fileMeta.setPathSuffix(pathSuffix);

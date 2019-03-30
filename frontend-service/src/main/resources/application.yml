@@ -30,3 +30,5 @@ spring:
 base:
     api:
         uri: http://localhost:9030/
+    crawler:
+        uri: http://localhost:9010/

@@ -1,0 +1,2 @@
+insert into menu (parent_id, external_reference, uri, title, visible, created, created_user, last_updated, last_updated_user, item_order)
+select id, 'configuration/system', '/configuration/system', 'System', true, now(), 'system', now(), 'system', 5 from menu where external_reference = 'configuration';

@@ -9,7 +9,7 @@
                 <div class="card-header">&nbsp;</div>
                 <div class="card-body">
                     <div class="system-section">
-                        <p>Use this button to restart all of the three applications this system uses. Note that once stopped, the applications must be manually started again individually.</p>
+                        <p>Use this button to stop all of the three services this system uses. Note that once stopped, the applications must be manually started again individually.</p>
                         <div class="float-right">
                             <button id="stop-application" type="button" class="btn btn-primary btn-sm">Stop Application</button>
                         </div>

@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 import com.server.common.model.Action;
 import com.server.common.model.File;
 import com.server.common.model.FileProperty;
@@ -91,8 +92,10 @@ public class ApiInstagramHandler implements JobHandler {
             final String userId = userIds[i];
             final String uri = buildUri(context, userId);
             try {
-                final ResponseEntity<Map<String, Object>> res = template.exchange(uri, GET, null, new ParameterizedTypeReference<Map<String, Object>>(){});
-                final Map<String, Object> body = res.getBody();
+                final ResponseEntity<String> res = template.exchange(uri, GET, null, new ParameterizedTypeReference<String>(){});
+                final String bodyString = res.getBody();
+
+                final Map<String, Object> body = new Gson().fromJson(bodyString, Map.class);
 
                 final List<Map<String, Object>> data = (List<Map<String, Object>>) body.get("data");
                 if (data.isEmpty()) {
@@ -202,7 +205,11 @@ public class ApiInstagramHandler implements JobHandler {
         final String remotePath = (String) standardResolution.get("url");
         final String pathSuffix = "instagram/" + context.get("userId");
         final Map<String, Object> caption = (Map<String, Object>) item.get("caption");
-        final String description = (String) caption.get("text");
+        String description = "";
+
+        if (caption != null) {
+            description = (String) caption.get("text");
+        }
 
         final String type = deriveFileType(remotePath);
         file.setPathSuffix(pathSuffix);
@@ -269,8 +276,10 @@ public class ApiInstagramHandler implements JobHandler {
         final String remoteType = (String) item.get("type");
         final Map<String, Object> images = (Map<String, Object>) item.get(remoteType + "s");
         final Map<String, Object> standardResolution = (Map<String, Object>) images.get("standard_resolution");
-        final int width = (int) standardResolution.get("width");
-        final int height = (int) standardResolution.get("height");
+        final int width = ((Double)standardResolution.get("width")).intValue();
+        final int height = ((Double)standardResolution.get("height")).intValue();
+
+
         final FileProperty widthProperty = new FileProperty("width", "Width", valueOf(width), fileId);
         final FileProperty heightProperty = new FileProperty("height", "Height", valueOf(height), fileId);
         final FileProperty extension = new FileProperty("extension", "Extension", getExtension(path), fileId);

@@ -11,8 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import com.server.common.repository.BaseRepository;
 
 @Repository
-public class SystemRepository extends BaseRepository
-{
+public class SystemRepository extends BaseRepository {
     private static final String SYSTEM_STOP = "system/stop";
 
     @Autowired

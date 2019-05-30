@@ -17,7 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 public class FrontendService {
 
     public static void main(String[] args) {
-
         SpringApplication.run(FrontendService.class, args);
     }
 }

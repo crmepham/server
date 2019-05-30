@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class MenuService
-{
+public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
 

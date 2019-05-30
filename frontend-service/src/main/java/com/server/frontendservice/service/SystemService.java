@@ -9,8 +9,8 @@ import com.server.frontendservice.repository.SystemRepository;
 
 @Transactional
 @Service
-public class SystemService extends BaseService
-{
+public class SystemService extends BaseService {
+
     @Autowired
     private SystemRepository systemRepository;
 

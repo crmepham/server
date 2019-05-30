@@ -12,18 +12,15 @@ import java.util.List;
 
 @Transactional
 @Service
-public class ErrorService extends BaseService
-{
+public class ErrorService extends BaseService {
     @Autowired
     private ErrorRepository errorRepository;
 
     public List<ApplicationError> getAll() {
-
         return errorRepository.getAll();
     }
 
     public ApplicationError getById(long id) {
-
         return errorRepository.getById(id);
     }
 

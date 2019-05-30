@@ -1,7 +1,9 @@
 package com.server.frontendservice.controller;
 
-import com.server.common.model.Dashboard;
-import com.server.frontendservice.service.DashboardService;
+import java.util.concurrent.ExecutionException;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
+import com.server.common.model.Dashboard;
+import com.server.frontendservice.service.DashboardService;
 
 @Controller
 public class DashboardController extends BaseController
@@ -24,19 +25,15 @@ public class DashboardController extends BaseController
     private DashboardService dashboardService;
 
     @GetMapping(PATH)
-    public void dashboards(Model model) throws InterruptedException, ExecutionException
-    {
+    public void dashboards(Model model) throws InterruptedException, ExecutionException {
         model.addAttribute("dashboards", dashboardService.getAll().get());
-        model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/dashboards", "font-awesome.min"));
-        model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
+        css(model, "data-tables", "data-tables/dashboards", "font-awesome.min");
+        js(model, "data-tables", "font-awesome.min");
     }
 
     @GetMapping(PATH + "/{id}")
-    public String dashboard(Model model, @PathVariable("id") Long id)
-    {
-        Dashboard d = dashboardService.get(id);
-        model.addAttribute("item", d);
-
+    public String dashboard(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("item", dashboardService.get(id));
         return "/configuration/dashboard/edit";
     }
 
@@ -48,9 +45,7 @@ public class DashboardController extends BaseController
     {
         dashboardService.update(dashboard, request);
         model.addAttribute("item", dashboard);
-
         toast("Successfully updated dashboard", redirect);
-
         return "redirect:/configuration/dashboards";
     }
 }

@@ -19,12 +19,10 @@ public class ActionService extends BaseService
     private ActionRepository actionRepository;
 
     public List<Action> getAll() {
-
         return actionRepository.getAll();
     }
 
     public Action getById(long id) {
-
         return actionRepository.getById(id);
     }
 }

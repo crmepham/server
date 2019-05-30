@@ -1,7 +1,6 @@
 package com.server.frontendservice.controller;
 
-import com.server.common.model.Property;
-import com.server.common.service.PropertyService;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.List;
+import com.server.common.model.Property;
+import com.server.common.service.PropertyService;
+import lombok.val;
 
 @Controller
-public class PropertyController extends BaseController
-{
+public class PropertyController extends BaseController {
     private static final String PATH = "configuration/properties";
 
     @Autowired
@@ -25,7 +24,7 @@ public class PropertyController extends BaseController
 
     @GetMapping(PATH)
     public String errors(Model model) {
-        List<Property> all = propertyService.getAll();
+        val all = propertyService.getAll();
         model.addAttribute("properties", all);
         model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/properties", "font-awesome.min"));
         model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
@@ -41,13 +40,11 @@ public class PropertyController extends BaseController
     @PostMapping(value = PATH + "/update")
     public String update(Model model,
                          @ModelAttribute("property") Property property,
-                         RedirectAttributes redirect)
-    {
+                         RedirectAttributes redirect) {
         propertyService.update(property);
         model.addAttribute("item", property);
 
         toast("Successfully updated dashboard", redirect);
-
         return "redirect:/configuration/properties";
     }
 }

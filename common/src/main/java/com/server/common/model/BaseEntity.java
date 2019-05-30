@@ -1,12 +1,18 @@
 package com.server.common.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @MappedSuperclass
 public class BaseEntity {
 
@@ -39,73 +45,5 @@ public class BaseEntity {
         setLastUpdated(now);
         setCreatedUser("system");
         setLastUpdatedUser("system");
-    }
-
-    /**
-     * Gets the id.
-     *
-     * @return id
-     */
-    public Long getId()
-    {
-        return id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param id the id
-     */
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    public String getLastUpdatedUser() {
-        return lastUpdatedUser;
-    }
-
-    public void setLastUpdatedUser(String lastUpdatedUser) {
-        this.lastUpdatedUser = lastUpdatedUser;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public String getDeletedUser() {
-        return deletedUser;
-    }
-
-    public void setDeletedUser(String deletedUser) {
-        this.deletedUser = deletedUser;
     }
 }

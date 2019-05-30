@@ -1,8 +1,20 @@
 package com.server.frontendservice.controller;
 
-import com.server.common.model.File;
-import com.server.common.model.InputResult;
-import com.server.common.service.FileService;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
+import static org.springframework.util.StringUtils.hasText;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -20,42 +32,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-
-import static java.lang.String.format;
-import static java.util.stream.Collectors.toList;
-import static org.springframework.util.StringUtils.hasText;
+import com.server.common.model.File;
+import com.server.common.service.FileService;
+import lombok.val;
+import lombok.var;
 
 @Controller
-public class FileController extends BaseController
-{
+public class FileController extends BaseController {
     private static final String PATH = "applications/files";
-
     private static final ConcurrentHashMap<String, File> CACHE = new ConcurrentHashMap<>();
 
     @Autowired
     private FileService fileService;
 
     @GetMapping(PATH)
-    public void files(Model model) throws ExecutionException, InterruptedException
-    {
-        CompletableFuture<List<File>> files = fileService.getAll();
+    public void files(Model model) throws ExecutionException, InterruptedException {
+        val files = fileService.getAll();
 
         CompletableFuture.allOf(files).join();
 
         model.addAttribute("files", files.get());
-        model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/files", "font-awesome.min"));
-        model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
+        css(model, "data-tables", "data-tables/files", "font-awesome.min");
+        js(model, "data-tables", "font-awesome.min");
     }
 
     @GetMapping("applications/uploader")
@@ -63,8 +61,7 @@ public class FileController extends BaseController
 
     @GetMapping("applications/files/{id}")
     public String file(Model model, @PathVariable("id") long id) throws ExecutionException, InterruptedException {
-
-        CompletableFuture<File> file = fileService.getById(id);
+        val file = fileService.getById(id);
 
         CompletableFuture.allOf(file).join();
 
@@ -75,18 +72,15 @@ public class FileController extends BaseController
     }
 
     @GetMapping(value = "applications/files/create")
-    public String createView(Model model)
-    {
+    public String createView(Model model) {
         model.addAttribute("item", new File());
         model.addAttribute("types", getTypes());
-
         return "/applications/files/edit";
     }
 
     @GetMapping(value = "applications/files/{id}/delete/file")
-    public String deleteFile(Model model, RedirectAttributes redirect, @PathVariable("id") long id) throws ExecutionException, InterruptedException
-    {
-        CompletableFuture<File> fileMeta = fileService.getById(id);
+    public String deleteFile(Model model, RedirectAttributes redirect, @PathVariable("id") long id) throws ExecutionException, InterruptedException {
+        val fileMeta = fileService.getById(id);
 
         CompletableFuture.allOf(fileMeta).join();
 
@@ -108,8 +102,8 @@ public class FileController extends BaseController
                          @ModelAttribute("file") File file,
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
     {
-        final boolean isNew = file.getId() == null;
-        CompletableFuture<List<File>> all = fileService.getAll();
+        val isNew = file.getId() == null;
+        val all = fileService.getAll();
         CompletableFuture.allOf(all).join();
 
         if (isNew)
@@ -129,18 +123,15 @@ public class FileController extends BaseController
         model.addAttribute("types", getTypes());
 
         toast(format("Successfully %s file", isNew ? "created" : "updated"), redirect);
-
         return format("redirect:/applications/files/%s", file.getId());
     }
 
     @GetMapping(value = "applications/files/{id}/delete")
     public String delete(@PathVariable("id") long id,
-                         RedirectAttributes redirect) throws ExecutionException, InterruptedException
-    {
+                         RedirectAttributes redirect) throws ExecutionException, InterruptedException {
         fileService.delete(id);
 
         toast("Successfully deleted file", redirect);
-
         return "redirect:/applications/files";
     }
 
@@ -149,105 +140,89 @@ public class FileController extends BaseController
                                    @RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirect) throws ExecutionException, InterruptedException {
 
-        CompletableFuture<File> fileMeta = fileService.getById(id);
+        val fileMeta = fileService.getById(id);
 
         CompletableFuture.allOf(fileMeta).join();
 
-        boolean success = fileService.store(file, fileMeta.get());
-
-        final String message = success ? "Successfully uploaded file" : "Failed to upload file. Ensure the file and " +
+        val success = fileService.store(file, fileMeta.get());
+        val message = success ? "Successfully uploaded file" : "Failed to upload file. Ensure the file and " +
                 "the path for the specified type exist and have valid permissions.";
 
         toast(message, redirect);
-
         return format("redirect:/applications/files/%s", id);
     }
 
     @PostMapping("applications/files/multiple/upload")
     public String uploadMultiple(@RequestParam("files") MultipartFile[] files,
                                  @RequestParam("pathSuffix") String pathSuffix,
-                                   RedirectAttributes redirect) throws IOException
-    {
+                                   RedirectAttributes redirect) throws IOException {
 
         if (files.length <= 0) {
             toast("No files were selected for upload.", redirect);
             return "redirect:/applications/uploader";
         }
 
-        final InputResult result = fileService.store(files, pathSuffix);
-
-        final String message = result.isSuccess() ? "Successfully uploaded " + result.getTotalCount() + " file(s)." : result.getFailureReason();
+        val result = fileService.store(files, pathSuffix);
+        val message = result.isSuccess() ? "Successfully uploaded " + result.getTotalCount() + " file(s)." : result.getFailureReason();
 
         toast(message, redirect);
-
         return "redirect:/applications/files";
     }
 
     @GetMapping("applications/files/download/{externalReference}")
     public void download(HttpServletResponse response, @PathVariable String externalReference)
-            throws Exception
-    {
-        File file = fileService.getByExternalReference(externalReference);
-        java.io.File fileData = new java.io.File(file.getAbsolutePath());
-        FileInputStream inputStream = new FileInputStream(fileData);
+            throws Exception {
+        val file = fileService.getByExternalReference(externalReference);
+        val fileData = new java.io.File(file.getAbsolutePath());
+        val inputStream = new FileInputStream(fileData);
+        val headerKey = "Content-Disposition";
+        val headerValue = String.format("attachment; filename=\"%s\"", new Object[] { fileData.getName() });
 
         response.setContentType("application/octet-stream");
         response.setContentLength((int)fileData.length());
-
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"", new Object[] { fileData.getName() });
         response.setHeader(headerKey, headerValue);
-
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
 
     @ResponseBody
     @GetMapping("/file/{externalReference}")
-    public byte[] getFileData(@PathVariable String externalReference) throws Exception
-    {
-        File file = fileService.getByExternalReference(externalReference);
-        java.io.File fileData = new java.io.File(file.getAbsolutePath());
-        FileInputStream is = new FileInputStream(fileData);
+    public byte[] getFileData(@PathVariable String externalReference) throws Exception {
+        val file = fileService.getByExternalReference(externalReference);
+        val fileData = new java.io.File(file.getAbsolutePath());
         return FileUtils.readFileToByteArray(fileData);
     }
 
     @ResponseBody
     @GetMapping("/i/{shortReference}")
-    public byte[] getFileDataShortReference(@PathVariable String shortReference) throws Exception
-    {
-        File file = getFile(shortReference);
-        java.io.File fileData = new java.io.File(file.getAbsolutePath());
+    public byte[] getFileDataShortReference(@PathVariable String shortReference) throws Exception {
+        val file = getFile(shortReference);
+        val fileData = new java.io.File(file.getAbsolutePath());
         return FileUtils.readFileToByteArray(fileData);
     }
 
     @GetMapping("/w/{shortReference}")
-    public String getFileDataShortReferenceWebView(Model model, @PathVariable String shortReference) throws Exception
-    {
-        File file = getFile(shortReference);
+    public String getFileDataShortReferenceWebView(Model model, @PathVariable String shortReference) throws Exception {
+        val file = getFile(shortReference);
         if (file != null)
         {
             populateImageModel(model, file);
         }
-
         return "/applications/files/imageWebView";
     }
 
-    void populateImageModel(Model model, File file) throws IOException
-    {
-        java.io.File fileData = new java.io.File(file.getAbsolutePath() == null ? "." : file.getAbsolutePath());
-
-        byte[] encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(fileData));
-        String encodedString = new String(encoded);
+    void populateImageModel(Model model, File file) throws IOException {
+        val fileData = new java.io.File(file.getAbsolutePath() == null ? "." : file.getAbsolutePath());
+        val encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(fileData));
+        val encodedString = new String(encoded);
 
         model.addAttribute("image", encodedString);
         model.addAttribute("file", file);
-        final String suffix = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".") + 1);
+        val suffix = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".") + 1);
         model.addAttribute("suffix", suffix);
     }
 
-    File getFile(@NonNull final String shortReference)
-    {
-        File file = CACHE.get(shortReference);
+    File getFile(@NonNull final String shortReference) {
+        var file = CACHE.get(shortReference);
         if (file == null)
         {
             file = fileService.getByShortReference(shortReference);
@@ -258,14 +233,13 @@ public class FileController extends BaseController
 
     String getShortReference(final List<File> all)
     {
-        final List<String> codes = all.stream()
+        val codes = all.stream()
                 .map(File::getShortReference)
                 .distinct()
                 .collect(toList());
 
-        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        while (codes.contains(shortReference))
-        {
+        var shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
+        while (codes.contains(shortReference)) {
             shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
         }
         return shortReference;

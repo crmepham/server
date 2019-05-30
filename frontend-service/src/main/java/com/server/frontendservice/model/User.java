@@ -10,11 +10,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.server.common.model.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity implements UserDetails {
-
     private static final long serialVersionUID = 2877731834552130544L;
 
     @Column(name = "username")
@@ -42,63 +47,6 @@ public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "visible")
     private boolean visible;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccßountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    @Override
-    public String toString() {
-        return "User [username=" + username + ", password="
-                + password + ", accountNonExpired="
-                + accountNonExpired + ", accountNonLocked=" + accountNonLocked
-                + ", credentialsNonExpired=" + credentialsNonExpired
-                + ", enabled=" + enabled + "]";
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

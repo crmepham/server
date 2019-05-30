@@ -1,26 +1,25 @@
 package com.server.frontendservice.service;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.server.common.model.Action;
 import com.server.common.model.Job;
 import com.server.common.model.Schedule;
 import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Transactional
 @Service
-public class ScheduleService extends BaseService
-{
+public class ScheduleService extends BaseService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
     public CompletableFuture<List<Schedule>> getAll() {
-
         return scheduleRepository.getAll();
     }
 
@@ -29,17 +28,14 @@ public class ScheduleService extends BaseService
     }
 
     public CompletableFuture<Schedule> getById(long id) {
-
         return scheduleRepository.getById(id);
     }
 
     public CompletableFuture<List<Job>> getJobs(long id) {
-
         return scheduleRepository.getJobs(id);
     }
 
     public CompletableFuture<Job> getJob(long id) {
-
         return scheduleRepository.getJob(id);
     }
 

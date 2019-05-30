@@ -21,7 +21,7 @@ public class Schedules {
      * emails every 5 minutes.
      */
     //@Scheduled(fixedRate = 3000)
-    @Scheduled(cron = "*/5 * * * * ?")
+    @Scheduled(cron = "* */5 * * * ?")
     public void sendQueuedEmails() {
 
         logger.info("Started schedule for sending queued emails.");

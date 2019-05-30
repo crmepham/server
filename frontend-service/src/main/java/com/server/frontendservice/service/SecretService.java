@@ -1,23 +1,23 @@
 package com.server.frontendservice.service;
 
-import com.server.common.model.Property;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.server.common.model.Secret;
 import com.server.common.model.SecretProperty;
 import com.server.common.repository.PropertyRepository;
 import com.server.common.service.BaseService;
 import com.server.frontendservice.repository.SecretRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import lombok.val;
 
 @Transactional
 @Service
-public class SecretService extends BaseService
-{
+public class SecretService extends BaseService {
     public static final String SECRET_TYPES = "secret_types";
     public static final String SECRET_PROPERTY_NAMES = "secret_property_names";
 
@@ -28,26 +28,20 @@ public class SecretService extends BaseService
     private PropertyRepository propertyRepository;
 
     public CompletableFuture<List<Secret>> getAll() {
-
         return secretRepository.getAll();
     }
 
     public List<String> getAllTypes() {
-
-        Property property = propertyRepository.getByExternalReference(SECRET_TYPES);
-
+        val property = propertyRepository.getByExternalReference(SECRET_TYPES);
         return Arrays.asList(property.getValue().split(","));
     }
 
     public List<String> getAllPropertyNames() {
-
-        Property property = propertyRepository.getByExternalReference(SECRET_PROPERTY_NAMES);
-
+        val property = propertyRepository.getByExternalReference(SECRET_PROPERTY_NAMES);
         return Arrays.asList(property.getValue().split(","));
     }
 
     public CompletableFuture<Secret> getById(long id) {
-
         return secretRepository.getById(id);
     }
 
@@ -64,7 +58,6 @@ public class SecretService extends BaseService
     }
 
     public CompletableFuture<List<SecretProperty>> getProperties(long id) {
-
         return secretRepository.getProperties(id);
     }
 

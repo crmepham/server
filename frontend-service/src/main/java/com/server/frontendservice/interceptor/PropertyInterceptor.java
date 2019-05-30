@@ -13,16 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.server.common.service.PropertyService;
 
 @Component
-public class PropertyInterceptor implements HandlerInterceptor
-{
+public class PropertyInterceptor implements HandlerInterceptor {
     @Autowired
     private PropertyService propertyService;
 
     @Override
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView)
-    {
+                           ModelAndView modelAndView) {
         if (modelAndView != null) {
             modelAndView.addObject("hideSensitiveData", parseBoolean(propertyService.getByExternalReference("hide_sensitive_data").getValue()));
         }

@@ -13,19 +13,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.server.frontendservice.model.User;
 import com.server.frontendservice.repository.UserJpaDao;
+import lombok.val;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService
-{
+public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     private UserJpaDao userDAO;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDAO.findByUsernameAndEnabledTrueAndDeletedFalse(username);
+        val user = userDAO.findByUsernameAndEnabledTrueAndDeletedFalse(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));

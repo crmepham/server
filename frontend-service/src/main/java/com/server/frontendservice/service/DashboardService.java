@@ -1,16 +1,18 @@
 package com.server.frontendservice.service;
 
-import com.server.common.model.Dashboard;
-import com.server.frontendservice.repository.DashboardRepository;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import com.server.common.model.Dashboard;
+import com.server.frontendservice.repository.DashboardRepository;
+import lombok.val;
 
 @Transactional
 @Service
@@ -30,8 +32,8 @@ public class DashboardService
 
     public void update(Dashboard dashboard, HttpServletRequest request) {
         dashboardRepository.update(dashboard);
-        HttpSession session = request.getSession();
-        final List<Dashboard> dashboards = (List<Dashboard>) session.getAttribute("session_dashboards");
+        val session = request.getSession();
+        val dashboards = (List<Dashboard>) session.getAttribute("session_dashboards");
         dashboards.removeIf(d -> d.getUri().equals(dashboard.getUri()));
         dashboards.add(dashboard);
     }

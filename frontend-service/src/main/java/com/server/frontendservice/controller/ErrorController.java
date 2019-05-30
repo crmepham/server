@@ -1,18 +1,16 @@
 package com.server.frontendservice.controller;
 
-import com.server.common.model.ApplicationError;
-import com.server.frontendservice.service.ErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Arrays;
-import java.util.List;
+import com.server.frontendservice.service.ErrorService;
+import lombok.val;
 
 @Controller
-public class ErrorController
+public class ErrorController extends BaseController
 {
     private static final String PATH = "reporting/errors";
 
@@ -21,10 +19,10 @@ public class ErrorController
 
     @GetMapping(PATH)
     public String errors(Model model) {
-        List<ApplicationError> all = errorService.getAll();
+        val all = errorService.getAll();
         model.addAttribute("errors", all);
-        model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/errors", "font-awesome.min"));
-        model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
+        css(model, "data-tables", "data-tables/errors", "font-awesome.min");
+        js(model, "data-tables", "font-awesome.min");
         return "reporting/errors";
     }
 

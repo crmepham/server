@@ -25,6 +25,15 @@
         </developer>
     </developers>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -52,5 +61,6 @@
         <hibernate-validator.version>6.0.12.Final</hibernate-validator.version>
         <commons-pool2.version>2.5.0</commons-pool2.version>
         <retry.version>1.2.2.RELEASE</retry.version>
+        <lombok.version>1.18.8</lombok.version>
     </properties>
 </project>

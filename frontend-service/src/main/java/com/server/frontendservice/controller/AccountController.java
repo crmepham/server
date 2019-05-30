@@ -1,6 +1,7 @@
 package com.server.frontendservice.controller;
 
 import static java.lang.String.format;
+import static java.lang.String.valueOf;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,6 +25,7 @@ import com.server.common.model.Account;
 import com.server.common.model.AccountTransaction;
 import com.server.common.model.InputResult;
 import com.server.frontendservice.service.AccountService;
+import lombok.val;
 
 @Controller
 public class AccountController extends BaseController
@@ -37,13 +39,13 @@ public class AccountController extends BaseController
     public String reminders(Model model) throws ExecutionException, InterruptedException
     {
 
-        CompletableFuture<List<Account>> accounts = accountService.getAll();
+        val accounts = accountService.getAll();
 
         CompletableFuture.allOf(accounts).join();
 
         model.addAttribute("accounts", accounts.get());
-        model.addAttribute("styles", Arrays.asList("data-tables", "data-tables/accounts", "font-awesome.min"));
-        model.addAttribute("sheets", Arrays.asList("data-tables", "font-awesome.min"));
+        css(model, "data-tables", "data-tables/accounts", "font-awesome.min");
+        js(model, "data-tables", "font-awesome.min");
 
         return "/applications/accounts";
     }
@@ -51,12 +53,12 @@ public class AccountController extends BaseController
     @GetMapping("applications/accounts/{id}")
     public String reminder(Model model, @PathVariable("id") long id) throws ExecutionException, InterruptedException {
 
-        CompletableFuture<Account> account = accountService.getById(id);
+        val  account = accountService.getById(id);
 
         CompletableFuture.allOf(account).join();
 
-        model.addAttribute("styles", Arrays.asList("data-tables"));
-        model.addAttribute("sheets", Arrays.asList("data-tables"));
+        css(model, "data-tables");
+        js(model, "data-tables");
 
         model.addAttribute("item", account.get());
         return "/applications/accounts/edit";
@@ -75,13 +77,13 @@ public class AccountController extends BaseController
                          @ModelAttribute("account") Account account,
                          RedirectAttributes redirect) throws ExecutionException, InterruptedException
     {
-        final boolean isNew = account.getId() == null;
+        val isNew = account.getId() == null;
 
         accountService.update(account);
 
         if (isNew)
         {
-            CompletableFuture<List<Account>> all = accountService.getAll();
+            val all = accountService.getAll();
             CompletableFuture.allOf(all).join();
             Collections.reverse(all.get());
             account = all.get().iterator().next();
@@ -126,18 +128,18 @@ public class AccountController extends BaseController
                                          @RequestParam("percent") double percent,
                                          @RequestParam("accountId") long accountId) throws ExecutionException, InterruptedException
     {
-        CompletableFuture<Account> account = accountService.getById(accountId);
+        val account = accountService.getById(accountId);
 
         CompletableFuture.allOf(account).join();
 
-        final List<AccountTransaction> existing = account.get().getTransactions().stream()
+        val existing = account.get().getTransactions().stream()
                 .filter(t -> name.equalsIgnoreCase(t.getName())).collect(Collectors.toList());
 
         if (existing.size() > 0) {
             return new InputResult(format("A transaction with the name %s already exists.", name));
         }
 
-        AccountTransaction transaction = new AccountTransaction();
+        val transaction = new AccountTransaction();
         transaction.setAccountId(account.get().getId());
         transaction.setName(name);
         transaction.setType(type);

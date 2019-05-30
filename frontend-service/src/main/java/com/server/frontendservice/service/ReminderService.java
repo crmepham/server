@@ -13,13 +13,11 @@ import java.util.concurrent.CompletableFuture;
 
 @Transactional
 @Service
-public class ReminderService extends BaseService
-{
+public class ReminderService extends BaseService {
     @Autowired
     private ReminderRepository reminderRepository;
 
     public CompletableFuture<List<Reminder>> getAll() {
-
         return reminderRepository.getAll();
     }
 
@@ -32,7 +30,6 @@ public class ReminderService extends BaseService
     }
 
     public CompletableFuture<Reminder> getById(long id) {
-
         return reminderRepository.getById(id);
     }
 }

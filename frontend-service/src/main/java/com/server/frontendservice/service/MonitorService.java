@@ -13,13 +13,11 @@ import com.server.frontendservice.repository.MonitorRepository;
 
 @Transactional
 @Service
-public class MonitorService extends BaseService
-{
+public class MonitorService extends BaseService {
     @Autowired
     private MonitorRepository monitorRepository;
 
     public CompletableFuture<List<Monitor>> getAll() {
-
         return monitorRepository.getAll();
     }
 
@@ -32,7 +30,6 @@ public class MonitorService extends BaseService
     }
 
     public CompletableFuture<Monitor> getById(long id) {
-
         return monitorRepository.getById(id);
     }
 }

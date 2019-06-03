@@ -79,6 +79,15 @@ public class FileService extends BaseService
         return new java.io.File(file.getAbsolutePath()).exists();
     }
 
+    public boolean store(final java.io.File file, final File fileMeta) {
+        final String path = getPath(fileMeta);
+        ensureDirectoryExists(path);
+        fileMeta.setAbsolutePath(file.getAbsolutePath());
+        fileMeta.setLastUpdated(new Date());
+        update(fileMeta);
+        return true;
+    }
+
     public boolean store(final MultipartFile multipartFile, final File fileMeta) {
 
         try {
@@ -177,16 +186,6 @@ public class FileService extends BaseService
         fileRepository.create(fileMeta);
 
         return true;
-    }
-
-    private String getShortReference()
-    {
-        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        while (getByShortReference(shortReference) != null)
-        {
-            shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        }
-        return shortReference;
     }
 
     private List<FileProperty> createProperties(final String formattedLength, final long fileId, final Path path) throws IOException {

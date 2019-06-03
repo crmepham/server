@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.smattme</groupId>
+            <artifactId>mysql-backup4j</artifactId>
+            <version>${mysql-backup4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.final60</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>

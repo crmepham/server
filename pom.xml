@@ -62,5 +62,6 @@
         <commons-pool2.version>2.5.0</commons-pool2.version>
         <retry.version>1.2.2.RELEASE</retry.version>
         <lombok.version>1.18.8</lombok.version>
+        <mysql-backup4j.version>1.0.1</mysql-backup4j.version>
     </properties>
 </project>

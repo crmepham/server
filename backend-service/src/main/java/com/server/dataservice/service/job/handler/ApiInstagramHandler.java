@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
@@ -38,7 +37,7 @@ import com.server.common.model.Action;
 import com.server.common.model.File;
 import com.server.common.model.FileProperty;
 import com.server.common.repository.FileRepository;
-import com.server.common.service.FileService;
+import com.server.common.service.BaseService;
 import com.server.dataservice.interfaces.JobHandler;
 import com.server.dataservice.repository.ActionRepository;
 import com.server.dataservice.repository.PropertyRepository;
@@ -51,7 +50,7 @@ import com.server.dataservice.repository.PropertyRepository;
  *
  */
 @Component
-public class ApiInstagramHandler implements JobHandler {
+public class ApiInstagramHandler extends BaseService implements JobHandler {
 
     private final Logger log = Logger.getLogger(ApiInstagramHandler.class.getSimpleName());
 
@@ -63,9 +62,6 @@ public class ApiInstagramHandler implements JobHandler {
 
     @Autowired
     private RestTemplate template;
-
-    @Autowired
-    private FileService fileService;
 
     @Autowired
     private FileRepository fileRepository;
@@ -306,16 +302,6 @@ public class ApiInstagramHandler implements JobHandler {
         file.setLastUpdatedUser("system");
         file.setExternalReference(id);
         return file;
-    }
-
-    private String getShortReference()
-    {
-        String shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        while (fileService.getByShortReference(shortReference) != null)
-        {
-            shortReference = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5).toLowerCase();
-        }
-        return shortReference;
     }
 
     @NonNull

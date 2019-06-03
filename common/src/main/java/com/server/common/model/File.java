@@ -1,19 +1,18 @@
 package com.server.common.model;
 
+import java.util.Collection;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Table(name="file")
 public class File extends BaseEntity {
-
-    public static final String TYPE_IMAGE = "image";
 
     @Column(name = "external_reference")
     private String externalReference;

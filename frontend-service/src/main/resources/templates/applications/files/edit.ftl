@@ -161,8 +161,8 @@
                     <div class="card-body">
                         <#list item.properties as p>
                             <div class="form-group row">
-                                <div class="col-2"><label class="col-form-label right">${p.title!p.name}</label></div>
-                                <div class="col-10"><input class="form-control no-padding" type="text" value="${p.value}<#if p.name == 'size'>MB</#if>" readonly></div>
+                                <div class="col-3"><label class="col-form-label right">${p.title!p.name}</label></div>
+                                <div class="col-9"><input class="form-control no-padding" type="text" value="${p.value}<#if p.name == 'size'>MB</#if>" readonly></div>
                             </div>
                         </#list>
                     </div>

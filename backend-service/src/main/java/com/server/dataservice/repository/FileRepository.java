@@ -10,7 +10,7 @@ import com.server.common.model.File;
 
 @Transactional
 @Repository
-public interface FileRepository extends JpaRepository<File, Long> {
+public interface FileRepository extends JpaRepository<File, Long>, FileRepositoryCustom {
 
     List<File> findByDeletedFalseOrderByCreatedDesc();
     List<File> findByTypeAndDeletedFalseOrderByCreatedDesc(String type);

@@ -23,7 +23,7 @@ public class FileRepositoryService
     }
 
     public List<File> getByType(String type, int page) {
-        return fileRepository.findByTypeAndDeletedFalseAndAbsolutePathNotNullOrderByCreatedDesc(type, PageRequest.of(page, 20));
+        return fileRepository.findByTypeAndDeletedFalseAndAbsolutePathNotNullOrderByCreatedDesc(type, PageRequest.of(page, 30));
     }
 
     public File get(Long id) {

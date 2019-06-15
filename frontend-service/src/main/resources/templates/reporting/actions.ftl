@@ -12,10 +12,11 @@
                         <table class="data-table" class="display">
                             <thead>
                                 <tr>
-                                    <th width="20%">Class Name</th>
-                                    <th width="20%">Reference</th>
-                                    <th width="45%">Message</th>
-                                    <th width="15%">State</th>
+                                    <th width="17%">Class Name</th>
+                                    <th width="17%">Reference</th>
+                                    <th width="40%">Message</th>
+                                    <th width="11%">State</th>
+                                    <th width="15%">Updated</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -25,6 +26,7 @@
                                     <td><p>${a.objectReference!''}</p></td>
                                     <td><p>${a.resultMessage!''}</p></td>
                                     <td><p>${a.state}</p></td>
+                                    <td><p>${a.lastUpdated?string('HH:mm:ss dd/MM/yyyy')}</p></td>
                                 </tr>
                             </#list>
                             </tbody>

@@ -3,6 +3,7 @@ package com.server.dataservice.service;
 import com.server.common.model.File;
 import com.server.dataservice.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public class FileRepositoryService
 
     public List<File> getAllImages() {
         return fileRepository.findByTypeAndDeletedFalseOrderByCreatedDesc("Image");
+    }
+
+    public List<File> getByType(String type, int page) {
+        return fileRepository.findByTypeAndDeletedFalseAndAbsolutePathNotNullOrderByCreatedDesc(type, PageRequest.of(page, 20));
     }
 
     public File get(Long id) {

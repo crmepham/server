@@ -10,6 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name="file")
 public class File extends BaseEntity {
@@ -56,136 +61,8 @@ public class File extends BaseEntity {
         this.setLastUpdatedUser("system");
     }
 
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Collection<FileProperty> getProperties() {
-        return properties;
-    }
-
     public FileProperty getFileProperty(String name) {
 
         return properties.stream().filter(p -> p.getName().equals(name)).findFirst().get();
-    }
-
-    public void setProperties(Collection<FileProperty> properties) {
-        this.properties = properties;
-    }
-
-    public String getExternalReference() {
-        return externalReference;
-    }
-
-    public void setExternalReference(String externalReference) {
-        this.externalReference = externalReference;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Gets the filename.
-     *
-     * @return filename
-     */
-    public String getFilename()
-    {
-        return filename;
-    }
-
-    /**
-     * Sets the filename.
-     *
-     * @param filename the filename
-     */
-    public void setFilename(String filename)
-    {
-        this.filename = filename;
-    }
-
-    /**
-     * Gets the pathSuffix.
-     *
-     * @return pathSuffix
-     */
-    public String getPathSuffix()
-    {
-        return pathSuffix;
-    }
-
-    /**
-     * Sets the pathSuffix.
-     *
-     * @param pathSuffix the pathSuffix
-     */
-    public void setPathSuffix(String pathSuffix)
-    {
-        this.pathSuffix = pathSuffix;
-    }
-
-    /**
-     * Gets the absolutePath.
-     *
-     * @return absolutePath
-     */
-    public String getAbsolutePath()
-    {
-        return absolutePath;
-    }
-
-    /**
-     * Sets the absolutePath.
-     *
-     * @param absolutePath the absolutePath
-     */
-    public void setAbsolutePath(String absolutePath)
-    {
-        this.absolutePath = absolutePath;
-    }
-
-    /**
-     * Gets the shortReference.
-     *
-     * @return shortReference
-     */
-    public String getShortReference()
-    {
-        return shortReference;
-    }
-
-    /**
-     * Sets the shortReference.
-     *
-     * @param shortReference the shortReference
-     */
-    public void setShortReference(String shortReference)
-    {
-        this.shortReference = shortReference;
     }
 }

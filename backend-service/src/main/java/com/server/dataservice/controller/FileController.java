@@ -37,6 +37,11 @@ public class FileController
         return new ResponseEntity<>(fileService.get(id), HttpStatus.OK);
     }
 
+    @GetMapping("/get-by-type/{type}/{page}")
+    public ResponseEntity<List<File>> getByType(@PathVariable("type") String type, @PathVariable("page") Integer page) {
+        return new ResponseEntity<>(fileService.getByType(type, page), HttpStatus.OK);
+    }
+
     @GetMapping("/get-by-external-reference/{externalReference}")
     public ResponseEntity<File> get(@PathVariable("externalReference") String externalReference) {
         return new ResponseEntity<>(fileService.get(externalReference), HttpStatus.OK);

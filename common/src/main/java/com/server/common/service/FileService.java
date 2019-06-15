@@ -71,6 +71,10 @@ public class FileService extends BaseService
         return fileRepository.getByExternalReference(externalReference);
     }
 
+    public List<File> getFiles(String type, int page) {
+        return fileRepository.getByType(type, page);
+    }
+
     public File getByShortReference(final String shortReference) {
         return fileRepository.getByShortReference(shortReference);
     }

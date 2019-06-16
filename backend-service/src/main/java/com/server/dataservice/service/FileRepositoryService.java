@@ -1,12 +1,14 @@
 package com.server.dataservice.service;
 
-import com.server.common.model.File;
-import com.server.dataservice.repository.FileRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.server.common.model.File;
+import com.server.dataservice.repository.FileRepository;
+import lombok.val;
 
 @Service
 public class FileRepositoryService
@@ -22,8 +24,13 @@ public class FileRepositoryService
         return fileRepository.findByTypeAndDeletedFalseOrderByCreatedDesc("Image");
     }
 
-    public List<File> getByType(String type, int page) {
-        return fileRepository.findByTypeAndDeletedFalseAndAbsolutePathNotNullOrderByCreatedDesc(type, PageRequest.of(page, 30));
+    public List<File> getByType(String type, String year, int page) {
+        if ("all".equalsIgnoreCase(year)) {
+            return fileRepository.findByDeletedFalseAndAbsolutePathNotNullAndTypeOrderByCreatedDesc(type, PageRequest.of(page, 30));
+        } else {
+            val files = fileRepository.getByYearAndType(Integer.parseInt(year), type, PageRequest.of(page, 30));
+            return files;
+        }
     }
 
     public File get(Long id) {

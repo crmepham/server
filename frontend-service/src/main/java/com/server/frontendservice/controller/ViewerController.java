@@ -1,7 +1,13 @@
 package com.server.frontendservice.controller;
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,18 +31,29 @@ public class ViewerController extends BaseController {
     @Autowired
     private FileService fileService;
 
-    @Autowired
-    private FileController fileController;
-
     @GetMapping(PATH)
     public void view(Model model) {
         js(model, "viewer");
         css(model, "viewer");
+        model.addAttribute("years", getYears());
     }
 
-    @PostMapping(PATH + "/{type}/page/{page}")
-    public String page(Model model, HttpServletResponse response, @PathVariable String type, @PathVariable Integer page) throws IOException {
-        val files = fileService.getFiles(type, page);
+    private List<Integer> getYears()
+    {
+        val years = IntStream.rangeClosed(2017, Calendar.getInstance().get(Calendar.YEAR))
+                        .boxed()
+                        .collect(toList());
+        Collections.reverse(years);
+        return years;
+    }
+
+    @PostMapping(PATH + "/{type}/{year}/{page}")
+    public String page(Model model,
+                       HttpServletResponse response,
+                       @PathVariable String type,
+                       @PathVariable String year,
+                       @PathVariable Integer page) throws IOException {
+        val files = fileService.getFiles(type, year, page);
         if (files.isEmpty()) {
             response.setStatus(405);
         } else {

@@ -47,9 +47,9 @@ public class FileRepository extends BaseRepository
         return CompletableFuture.completedFuture(res.getBody());
     }
 
-    public List<File> getByType(String type, int page) {
+    public List<File> getByType(String type, String year, int page) {
 
-        String url = baseUri + GET_BY_TYPE + type + "/" + page;
+        String url = baseUri + GET_BY_TYPE + type + "/" + year + "/" + page;
         ResponseEntity<List<File>> res = template.exchange(url, GET, getEntity(), new ParameterizedTypeReference<List<File>>() {});
         return res.getBody();
     }
